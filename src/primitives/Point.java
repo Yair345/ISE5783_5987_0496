@@ -2,6 +2,11 @@ package primitives;
 
 import java.util.Objects;
 
+/**
+ * This class present a point
+ *
+ * @author Yair Lasri
+ */
 public class Point
 {
 	final Double3 xyz;
@@ -92,11 +97,23 @@ public class Point
 		return Math.sqrt(distanceSquared(other));
 	}
 	
-	public Object add(Vector vector)
+	/**
+	 * Returns a new Point that is the result of adding the coordinates of this Point and the coordinates of the specified Vector.
+	 *
+	 * @param vector the Vector to add to this Point.
+	 * @return a new Point that is the result of adding the coordinates of this Point and the coordinates of the specified Vector.
+	 */
+	public Point add(Vector vector)
 	{
 		return new Point(xyz.add(vector.xyz));
 	}
 	
+	/**
+	 * Returns a new Vector that is the result of subtracting the coordinates of the specified Point from the coordinates of this Point.
+	 *
+	 * @param point the Point to subtract from this Point.
+	 * @return a new Vector that is the result of subtracting the coordinates of the specified Point from the coordinates of this Point.
+	 */
 	public Vector subtract(Point point)
 	{
 		return new Vector(point.xyz.subtract(xyz));
