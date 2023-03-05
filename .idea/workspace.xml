@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Finished Vector class.">
-      <change afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/Geometry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/Plane.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/RadialGeometry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/Sphere.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/Triangle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/geometries/Tube.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/primitives/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/primitives/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Vector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +77,17 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Finished Vector class." />
