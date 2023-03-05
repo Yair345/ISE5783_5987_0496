@@ -113,4 +113,51 @@ public class Vector extends Point
 		return new Vector(x, y, z);
 	}
 	
+	/**
+	 * Returns a new vector that is the result of scaling this vector by the specified scalar.
+	 *
+	 * @param scalar the scalar to scale the vector by.
+	 * @return a new vector that is the result of scaling this vector by the specified scalar.
+	 */
+	public Vector scale(double scalar)
+	{
+		return new Vector(xyz.scale(scalar));
+	}
+	
+	/**
+	 * Returns a string representation of this Vector object.
+	 * The string contains the class name and the coordinates of the Vector in the format:
+	 * "Vector: (x, y, z)".
+	 *
+	 * @return a string representation of this Vector object.
+	 */
+	@Override
+	public String toString()
+	{
+		return "Vector: " + xyz;
+	}
+	
+	/**
+	 * Returns true if the specified object is equal to this Point.
+	 * Two Points are considered equal if they have the same coordinates.
+	 *
+	 * @param o the object to be compared for equality with this Point.
+	 * @return true if the specified object is equal to this Point, false otherwise.
+	 */
+	@Override
+	public boolean equals(Object o)
+	{
+		return super.equals(o);
+	}
+	
+	/**
+	 * Returns a hash code for this Point.
+	 *
+	 * @return a hash code value for this Point.
+	 */
+	@Override
+	public int hashCode()
+	{
+		return super.hashCode();
+	}
 }
