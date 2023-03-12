@@ -5,6 +5,11 @@ import static java.lang.System.out;
 import static primitives.Util.isZero;
 
 /**
+ * Yair Lasri 214085987 yairlasri3@gmail.com
+ * Noam Benisho 213200496 nbenisho@g.jct.ac.il
+ */
+
+/**
  * Test program for the 1st stage
  *
  * @author Dan Zilberstein
