@@ -2,6 +2,8 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Double3.ZERO;
+
 /**
  * This class present a point
  *
@@ -116,6 +118,6 @@ public class Point
 	 */
 	public Vector subtract(Point point)
 	{
-		return new Vector(point.xyz.subtract(xyz));
+		return new Vector(xyz.subtract(point.xyz));
 	}
 }

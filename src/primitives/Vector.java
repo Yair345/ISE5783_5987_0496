@@ -1,5 +1,7 @@
 package primitives;
 
+import static primitives.Double3.ZERO;
+
 /**
  * This class present Vector that starts from (0,0,0)
  *
@@ -39,6 +41,14 @@ public class Vector extends Point
 		{
 			throw new IllegalArgumentException("Vector cannot be Vector(0,0,0)");
 		}
+	}
+	
+	public Vector add(Vector other)
+	{
+		Point temp = new Point(xyz.add(other.xyz));
+		if (temp.xyz.equals(ZERO))
+			throw new IllegalArgumentException("Getting the ZERO Vector!");
+		return new Vector(temp.xyz);
 	}
 	
 	/**
