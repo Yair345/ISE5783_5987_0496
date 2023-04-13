@@ -98,8 +98,9 @@ class VectorTests
 		
 		// =============== Boundary Values Tests ==================
 		// TC11: test adding v + (-v)
-//		assertThrows("Add v plus -v must throw exception", IllegalArgumentException.class,
-//				() -> new Vector(1, 2, 3).add(new Vector(-1, -2, -3)));
+		assertThrows(IllegalArgumentException.class,
+				() -> new Vector(1, 2, 3).add(new Vector(-1, -2, -3)),
+				"Add v plus -v must throw exception");
 	}
 	
 	@Test
@@ -137,8 +138,9 @@ class VectorTests
 		
 		// =============== Boundary Values Tests ==================
 		// TC11: test subtracting same point
-//		assertThrows("Subtract P from P must throw exception", IllegalArgumentException.class,
-//				() -> new Point(1, 2, 3).subtract(new Point(1, 2, 3)));
+		assertThrows(IllegalArgumentException.class,
+				() -> new Point(1, 2, 3).subtract(new Point(1, 2, 3)),
+				"Subtract P from P must throw exception");
 	}
 	
 	@Test
