@@ -27,17 +27,28 @@ public class Plane implements Geometry
      * @param p2 the second point on the plane.
      * @param p3 the third point on the plane.
      */
-    public  Plane(Point p1, Point p2, Point p3)
+    public Plane(Point p1, Point p2, Point p3)
     {
         this.q0 = p1;
-        
-        Vector v1 = p1.subtract(p2);
-        Vector v2 = p1.subtract(p3);
-        
-        if (!isZero(v1.dotProduct(v2))) // todo: check if the vectors are on the same line
+        Vector v1 = null, v2 = null;
+
+        try
+        {
+            v1 = p1.subtract(p2);
+            v2 = p1.subtract(p3);
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("Two dots are collides");
+        }
+
+        try
+        {
+            this.normal = v1.crossProduct(v2).normalize();
+        }
+        catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("The points are on the same line");
-    
-        this.normal = v1.crossProduct(v2).normalize();
+        }
     }
     
     /**
