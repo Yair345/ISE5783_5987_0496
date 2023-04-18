@@ -10,7 +10,14 @@ import java.util.Objects;
 public class Ray
 {
 	
+	/**
+	 * The starting point of the ray.
+	 */
 	private final Point p0;
+	
+	/**
+	 * The normalized direction of the ray.
+	 */
 	private final Vector dir;
 	
 	/**

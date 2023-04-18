@@ -22,7 +22,7 @@ public class Point
 	 */
 	public Point(double x, double y, double z)
 	{
-		xyz = new Double3(x, y, z);
+		this(new Double3(x, y, z));
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class Point
 	 */
 	Point(Double3 double3)
 	{
-		this(double3.d1, double3.d2, double3.d3);
+		xyz = double3;
 	}
 	
 	/**

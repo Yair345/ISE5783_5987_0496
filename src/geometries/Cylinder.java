@@ -12,7 +12,7 @@ public class Cylinder extends Tube
 	/**
 	 * The height of the cylinder.
 	 */
-	private double height;
+	private final double height;
 	
 	/**
 	 * Constructs a new Cylinder object with the specified radius, axis ray, and height.
@@ -53,7 +53,7 @@ public class Cylinder extends Tube
 		Point p0 = axisRay.getP0();
 		Vector v0 = axisRay.getDir();
 		
-		Vector v = null;
+		Vector v;
 		double t = 0;
 		
 		try
@@ -65,7 +65,6 @@ public class Cylinder extends Tube
 		{
 			t = 0;
 		}
-		
 		
 		if (t == 0) // bottom base
 		{
