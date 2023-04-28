@@ -6,7 +6,7 @@ import primitives.Vector;
 /**
  * The Geometry interface represents a geometrical object in 3D space.
  */
-public interface Geometry
+public interface Geometry extends Intersectable
 {
     /**
      * Returns the normal vector of the geometry at the specified point.
