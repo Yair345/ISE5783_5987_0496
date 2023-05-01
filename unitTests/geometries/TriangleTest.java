@@ -2,9 +2,12 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import javax.swing.table.TableRowSorter;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,6 +65,50 @@ class TriangleTest
         // Test the normal vector calculation with a given point
         assertEquals(new Vector(3, 4, -2).normalize(), t.getNormal(new Point(1, 1, 1)),
                 "Triangle's normal is not right - using param");
+    }
+
+    @Test
+    public void testFindIntersections()
+    {
+        Triangle triangle = new Triangle(new Point(1, 0, 1), new Point(0, 1, 1), new Point(-1, 0, 1));
+        Point a = new Point(0, 0, -1);
+        Point b = new Point(2, 0, 1);
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Point in the triangle
+        List<Point> result01 = triangle.findIntersections(new Ray(a,
+                new Vector(0, 0.5, 2)));
+        assertEquals(1, result01.size(), "Wrong number of points 01");
+
+        assertEquals(List.of(new Point(0, 0.5, 1)), result01, "Ray crosses triangle 01");
+
+        // TC02: Point doesn't in the triangle
+        assertNull(triangle.findIntersections(new Ray(a,
+                        new Vector(1, 1, 2))),
+                "Ray's line doesn't intersect triangle 02");
+
+        // TC03: Point in front of the triangle vertex
+        assertNull(triangle.findIntersections(new Ray(a,
+                        new Vector(0, 2, 2))),
+                "Ray's line doesn't intersect triangle 03");
+
+        // =============== Boundary Values Tests ==================
+
+        // TC11: Point in the triangle edge
+        assertNull(triangle.findIntersections(new Ray(a,
+                        new Vector(0.5, 0, 2))),
+                "Ray's line doesn't intersect triangle 11");
+
+        // TC12: Point in the triangle vertex
+        assertNull(triangle.findIntersections(new Ray(a,
+                        new Vector(1, 0, 2))),
+                "Ray's line doesn't intersect triangle 12");
+
+        // TC13: Point in the continuation of triangle edge
+        assertNull(triangle.findIntersections(new Ray(a,
+                        new Vector(2, 0, 2))),
+                "Ray's line doesn't intersect triangle 13");
     }
 
 }

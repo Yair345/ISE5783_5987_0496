@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -75,4 +77,67 @@ class PlaneTest
                 "Plane's normal is not right - using param");
     }
 
+    /**
+     * Test method for {@link Sphere#findIntersections(Ray)}.
+     */
+    @Test
+    public void testFindIntersections()
+    {
+        Plane plane = new Plane(new Point(1, 0, 1), new Vector(0, 0, 1));
+        Point a = new Point(0, 0, -1);
+        Point b = new Point(2, 0, 1);
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Ray's intersect the plane
+        List<Point> result01 = plane.findIntersections(new Ray(a,
+                new Vector(2, 0, 2)));
+        assertEquals(1, result01.size(), "Wrong number of points 01");
+
+        assertEquals(List.of(b), result01, "Ray crosses plane 01");
+
+        // TC02: Ray's doesn't intersect the plane
+        assertNull(plane.findIntersections(new Ray(a,
+                        new Vector(0, 2, -1))),
+                "Ray's line doesn't intersect plane 02");
+
+        // =============== Boundary Values Tests ==================
+
+        // TC11: Ray is parallel and contained in the plane
+        assertNull(plane.findIntersections(new Ray(b,
+                        new Vector(-1, 0, 0))),
+                "Ray's line doesn't intersect plane 11");
+
+        // TC12: Ray is parallel and doesn't contain in the plane
+        assertNull(plane.findIntersections(new Ray(new Point(2, 0, 0),
+                        new Vector(-1, 0, 0))),
+                "Ray's line doesn't intersect plane 12");
+
+        // TC13: Ray is orthogonal and start in the plane
+        assertNull(plane.findIntersections(new Ray(b,
+                        new Vector(0, 0, -1))),
+                "Ray's line doesn't intersect plane 13");
+
+        // TC14: Ray is orthogonal and start before the plane
+        List<Point> result14 = plane.findIntersections(new Ray(new Point(2, 0 , 0),
+                new Vector(0, 0, 1)));
+        assertEquals(1, result14.size(), "Wrong number of points 14");
+
+        assertEquals(List.of(b), result14, "Ray crosses plane 14");
+
+        // TC15: Ray is orthogonal and start after the plane
+        assertNull(plane.findIntersections(new Ray(new Point(2,0, 0),
+                        new Vector(0, 0, -1))),
+                "Ray's line doesn't intersect plane 15");
+
+        // TC16: Ray isn't orthogonal and start in the plane
+        assertNull(plane.findIntersections(new Ray(b,
+                        new Vector(-1, 0, -1))),
+                "Ray's line doesn't intersect plane 16");
+
+        // TC17: Ray isn't orthogonal and start in the point that define the plane
+        assertNull(plane.findIntersections(new Ray(new Point(1,0, 1),
+                        new Vector(-1, 0, -2))),
+                "Ray's line doesn't intersect plane 17");
+    }
 }

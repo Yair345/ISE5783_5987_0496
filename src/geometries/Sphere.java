@@ -3,8 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.List;
+import static java.lang.Math.sqrt;
 
 /**
  * The Sphere class represents a sphere in 3D space.
