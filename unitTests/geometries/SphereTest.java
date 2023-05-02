@@ -111,7 +111,7 @@ class SphereTest
         List<Point> result13 = sphere.findIntersections(new Ray(
                 new Point(1, 0, 2), new Vector(0, 0, -3)));
         assertEquals(2, result13.size(), "Wrong number of points 13");
-        assertEquals(List.of(b, c), result13, "Ray crosses sphere 13");
+        assertEquals(List.of(c, b), result13, "Ray crosses sphere 13");
         
         // TC14: Ray starts at sphere and goes inside (1 point)
         List<Point> result14 = sphere.findIntersections(new Ray(

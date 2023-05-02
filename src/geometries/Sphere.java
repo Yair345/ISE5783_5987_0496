@@ -3,6 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
+import java.util.LinkedList;
 import java.util.List;
 import static java.lang.Math.sqrt;
 
@@ -15,7 +17,7 @@ public class Sphere extends RadialGeometry
      * The center point of the sphere.
      */
     private Point center;
-    
+
     /**
      * Constructs a new Sphere object with the specified radius.
      *
@@ -26,7 +28,7 @@ public class Sphere extends RadialGeometry
         super(radius);
         center = _center;
     }
-    
+
     /**
      * Returns the center point of the sphere.
      *
@@ -36,7 +38,7 @@ public class Sphere extends RadialGeometry
     {
         return center;
     }
-    
+
     /**
      * Returns the normal vector to the sphere surface at the specified point.
      *
@@ -50,34 +52,57 @@ public class Sphere extends RadialGeometry
 
         return temp.normalize();
     }
-    
+
     @Override
     public List<Point> findIntersections(Ray ray)
     {
-        Vector u = center.subtract(ray.getP0());
-        
-        double tm = u.dotProduct(ray.getDir());
-        
-        double d = u.lengthSquared() - tm * tm;
-        
-        double th = sqrt(radius * radius - d);
-        
+        Vector u;
+        double tm, th;
+
+        try
+        {
+            u = center.subtract(ray.getP0());
+
+            tm = u.dotProduct(ray.getDir());
+
+            double d = u.lengthSquared() - tm * tm;
+
+            if (d >= radius * radius) // there are no intersections
+            {
+                return null;
+            }
+
+            th = sqrt(radius * radius - d);
+        }
+        catch(IllegalArgumentException e)
+        {
+            tm = 0;
+            th = radius;
+        }
+
         double t1 = tm + th;
         double t2 = tm - th;
+
+        if(t1 <= 0 && t2 <= 0)
+        {
+            return null;
+        }
+
+        List<Point> intersections = new LinkedList<>();
 
         if (t1 > 0)
         {
             Vector temp = ray.getDir().scale(t1);
-            Point p = ray.getP0().add(temp);
+            intersections.add(ray.getP0().add(temp));
         }
 
         if (t2 > 0)
         {
             Vector temp = ray.getDir().scale(t2);
-            Point p = ray.getP0().add(temp);
+            intersections.add(ray.getP0().add(temp));
         }
 
-        return null;
+        return intersections;
     }
 }
 

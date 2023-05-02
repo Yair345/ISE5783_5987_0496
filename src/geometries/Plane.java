@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -91,7 +92,35 @@ public class Plane implements Geometry
     @Override
     public List<Point> findIntersections(Ray ray)
     {
-        return null;
+        double temp, t;
+        Vector vec;
+        try
+        {
+            vec = q0.subtract(ray.getP0());
+        }
+        catch (IllegalArgumentException e)
+        {
+            return null;
+        }
+        temp = vec.dotProduct(normal);
+        t = normal.dotProduct(ray.getDir());
+
+        if (t == 0) // they are parallel
+        {
+            return null;
+        }
+        t = temp / t;
+
+        if (t <= 0) //direction is opposite
+        {
+            return null;
+        }
+
+        Vector p = ray.getDir().scale(t);
+        List<Point> intersect = new LinkedList<>();
+        intersect.add(ray.getP0().add(p));
+
+        return intersect;
     }
 }
 
