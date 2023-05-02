@@ -2,7 +2,10 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
@@ -91,30 +94,48 @@ public class PolygonTests
 			assertTrue(isZero(result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1]))),
 					"Polygon's normal is not orthogonal to one of the edges");
 	}
-
+	
 	@Test
 	public void testFindIntersections()
 	{
-		Plane plane = new Plane(new Point(1, 0, 1), new Vector(0, 0, 1));
+		Polygon polygon = new Polygon(new Point(2, 0, 0), new Point(0, 2, 0), new Point(-2, 0, 0), new Point(0,-2,0));
 		Point a = new Point(0, 0, -1);
 		Point b = new Point(2, 0, 1);
-
+		
 		// ============ Equivalence Partitions Tests ==============
-
-		// TC01: Ray's intersect the plane
-		List<Point> result01 = plane.findIntersections(new Ray(a,
-				new Vector(2, 0, 2)));
+		
+		// TC01: Point in the polygon
+		List<Point> result01 = polygon.findIntersections(new Ray(a,
+				new Vector(0, 0.5, 2)));
 		assertEquals(1, result01.size(), "Wrong number of points 01");
-
-		assertEquals(List.of(b), result01, "Ray crosses plane 01");
-
-		// TC02: Ray's doesn't intersect the plane
-		assertNull(plane.findIntersections(new Ray(a,
-						new Vector(0, 2, -1))),
-				"Ray's line doesn't intersect plane 02");
-
+		
+		assertEquals(List.of(new Point(0, 0.5, 1)), result01, "Ray crosses polygon 01");
+		
+		// TC02: Point doesn't in the polygon
+		assertNull(polygon.findIntersections(new Ray(a,
+						new Vector(1, 1, 2))),
+				"Ray's line doesn't intersect polygon 02");
+		
+		// TC03: Point in front of the polygon vertex
+		assertNull(polygon.findIntersections(new Ray(a,
+						new Vector(0, 2, 2))),
+				"Ray's line doesn't intersect polygon 03");
+		
 		// =============== Boundary Values Tests ==================
-
-		// TC11: Ray is parallel and contained in the plane
+		
+		// TC11: Point in the polygon edge
+		assertNull(polygon.findIntersections(new Ray(a,
+						new Vector(0.5, 0, 2))),
+				"Ray's line doesn't intersect polygon 11");
+		
+		// TC12: Point in the polygon vertex
+		assertNull(polygon.findIntersections(new Ray(a,
+						new Vector(1, 0, 2))),
+				"Ray's line doesn't intersect polygon 12");
+		
+		// TC13: Point in the continuation of polygon edge
+		assertNull(polygon.findIntersections(new Ray(a,
+						new Vector(2, 0, 2))),
+				"Ray's line doesn't intersect polygon 13");
 	}
 }
