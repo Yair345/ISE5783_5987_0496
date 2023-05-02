@@ -2,6 +2,8 @@ package geometries;
 
 /**
  * The RadialGeometry abstract class represents a geometrical object with a radial attribute in 3D space.
+ *
+ * @author Yair and Noam
  */
 public abstract class RadialGeometry implements Geometry
 {

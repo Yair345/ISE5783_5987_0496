@@ -10,6 +10,8 @@ import java.util.List;
 /**
  * The Geometries class represents a collection of intersectable geometries.
  * This class implements the Intersectable interface, allowing it to be intersected by a Ray object.
+ *
+ * @author Yair and Noam
  */
 public class Geometries implements Intersectable
 {
@@ -76,9 +78,9 @@ public class Geometries implements Intersectable
 			}
 		}
 		return result;
-	}
-	
-	// for making Eliezer happy
+		
+		
+		// for making Eliezer happy
 //		List<Point> result = new LinkedList<>();
 //
 //		for (var element: elements)	{
@@ -92,4 +94,5 @@ public class Geometries implements Intersectable
 //			return null;
 //		}
 //		return result;
+	}
 }

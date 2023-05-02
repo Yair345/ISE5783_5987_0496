@@ -95,11 +95,14 @@ public class PolygonTests
 					"Polygon's normal is not orthogonal to one of the edges");
 	}
 	
+	/**
+	 * Test method for {@link geometries.Polygon#findIntersections(Ray)}.
+	 */
 	@Test
 	public void testFindIntersections()
 	{
 		Polygon polygon = new Polygon(new Point(2, 0, 0), new Point(0, 2, 0),
-									  new Point(-2, 0, 0), new Point(0,-2,0));
+				new Point(-2, 0, 0), new Point(0, -2, 0));
 		Point a = new Point(0.5, 0.5, -1);
 		Point b = new Point(2, 0, 1);
 		

@@ -6,6 +6,8 @@ import primitives.Vector;
 
 /**
  * The Cylinder class extends the Tube class and represents a cylinder in 3D space.
+ *
+ * @author Yair and Noam
  */
 public class Cylinder extends Tube
 {

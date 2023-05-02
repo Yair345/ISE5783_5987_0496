@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * The Triangle class represents a triangle polygon in 3D space.
+ *
+ * @author Yair and Noam
  */
 public class Triangle extends Polygon
 {

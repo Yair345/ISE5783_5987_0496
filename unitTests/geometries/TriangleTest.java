@@ -66,7 +66,10 @@ class TriangleTest
         assertEquals(new Vector(3, 4, -2).normalize(), t.getNormal(new Point(1, 1, 1)),
                 "Triangle's normal is not right - using param");
     }
-
+    
+    /**
+     * Tests the {@link Triangle#findIntersections(Ray)} method.
+     */
     @Test
     public void testFindIntersections()
     {

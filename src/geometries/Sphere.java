@@ -10,6 +10,8 @@ import static java.lang.Math.sqrt;
 
 /**
  * The Sphere class represents a sphere in 3D space.
+ *
+ * @author Yair and Noam
  */
 public class Sphere extends RadialGeometry
 {
@@ -52,7 +54,13 @@ public class Sphere extends RadialGeometry
 
         return temp.normalize();
     }
-
+    
+    /**
+     * Finds the intersection points of the given ray with this sphere, if any exist.
+     *
+     * @param ray the ray to find intersections with
+     * @return a list of intersection points, or {@code null} if there are no intersections
+     */
     @Override
     public List<Point> findIntersections(Ray ray)
     {
@@ -61,11 +69,11 @@ public class Sphere extends RadialGeometry
 
         try
         {
-            u = center.subtract(ray.getP0());
+            u = center.subtract(ray.getP0()); // if the ray start at the center we go to catch
 
             tm = u.dotProduct(ray.getDir());
 
-            double d = u.lengthSquared() - tm * tm;
+            double d = u.lengthSquared() - tm * tm; // we will use sqrt only once in this function
 
             if (d >= radius * radius) // there are no intersections
             {
@@ -83,6 +91,7 @@ public class Sphere extends RadialGeometry
         double t1 = tm + th;
         double t2 = tm - th;
 
+        // we take only the positive values because the direction of ray
         if(t1 <= 0 && t2 <= 0)
         {
             return null;
@@ -90,6 +99,7 @@ public class Sphere extends RadialGeometry
 
         List<Point> intersections = new LinkedList<>();
 
+        // might be only 1 intersection
         if (t1 > 0)
         {
             Vector temp = ray.getDir().scale(t1);
