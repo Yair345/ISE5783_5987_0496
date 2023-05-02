@@ -64,7 +64,19 @@ public class Sphere extends RadialGeometry
         
         double t1 = tm + th;
         double t2 = tm - th;
-        
+
+        if (t1 > 0)
+        {
+            Vector temp = ray.getDir().scale(t1);
+            Point p = ray.getP0().add(temp);
+        }
+
+        if (t2 > 0)
+        {
+            Vector temp = ray.getDir().scale(t2);
+            Point p = ray.getP0().add(temp);
+        }
+
         return null;
     }
 }
