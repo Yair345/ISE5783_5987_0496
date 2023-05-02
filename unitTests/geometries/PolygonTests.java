@@ -98,44 +98,45 @@ public class PolygonTests
 	@Test
 	public void testFindIntersections()
 	{
-		Polygon polygon = new Polygon(new Point(2, 0, 0), new Point(0, 2, 0), new Point(-2, 0, 0), new Point(0,-2,0));
-		Point a = new Point(0, 0, -1);
+		Polygon polygon = new Polygon(new Point(2, 0, 0), new Point(0, 2, 0),
+									  new Point(-2, 0, 0), new Point(0,-2,0));
+		Point a = new Point(0.5, 0.5, -1);
 		Point b = new Point(2, 0, 1);
 		
 		// ============ Equivalence Partitions Tests ==============
 		
 		// TC01: Point in the polygon
 		List<Point> result01 = polygon.findIntersections(new Ray(a,
-				new Vector(0, 0.5, 2)));
+				new Vector(-0.5, -1.5, 1)));
 		assertEquals(1, result01.size(), "Wrong number of points 01");
 		
-		assertEquals(List.of(new Point(0, 0.5, 1)), result01, "Ray crosses polygon 01");
+		assertEquals(List.of(new Point(0, -1, 0)), result01, "Ray crosses polygon 01");
 		
 		// TC02: Point doesn't in the polygon
 		assertNull(polygon.findIntersections(new Ray(a,
-						new Vector(1, 1, 2))),
+						new Vector(2.5, 2.5, 1))),
 				"Ray's line doesn't intersect polygon 02");
 		
 		// TC03: Point in front of the polygon vertex
 		assertNull(polygon.findIntersections(new Ray(a,
-						new Vector(0, 2, 2))),
+						new Vector(2.5, -0.5, 1))),
 				"Ray's line doesn't intersect polygon 03");
 		
 		// =============== Boundary Values Tests ==================
 		
 		// TC11: Point in the polygon edge
 		assertNull(polygon.findIntersections(new Ray(a,
-						new Vector(0.5, 0, 2))),
+						new Vector(0.5, 0.5, 1))),
 				"Ray's line doesn't intersect polygon 11");
 		
 		// TC12: Point in the polygon vertex
 		assertNull(polygon.findIntersections(new Ray(a,
-						new Vector(1, 0, 2))),
+						new Vector(1.5, -0.5, 1))),
 				"Ray's line doesn't intersect polygon 12");
 		
 		// TC13: Point in the continuation of polygon edge
 		assertNull(polygon.findIntersections(new Ray(a,
-						new Vector(2, 0, 2))),
+						new Vector(2.5, -1.5, 1))),
 				"Ray's line doesn't intersect polygon 13");
 	}
 }
