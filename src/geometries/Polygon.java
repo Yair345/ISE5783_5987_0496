@@ -87,4 +87,35 @@ public class Polygon implements Geometry
    {
       return null;
    }
+
+   protected int inTriangle(Point p, Point a, Point b, Point c)
+   {
+      Vector vec1 = c.subtract(a);
+      Vector vec2 = b.subtract(a);
+
+      double w1, w2, temp; // w1 and w2 is a coefficients of vec1 and vec2
+      double ax = a.getX(), ay = a.getY(), bx = b.getX(), by = b.getY(), cx = c.getX(), cy = c.getY(), px = p.getX(), py = p.getY();
+
+      temp = (by - ay) * (cx -ax) - (bx - ax) * (cy - ay);
+      w1 = (ax * (cy - ay) + (py - ay) * (cx - ax) - py * (cy - ay)) / temp;
+      w2 = (py - ay - w1 * (by - ay)) / (cy - ay);
+
+      if (w1 < 0 || w2 < 0 || w1 > 1 || w2 > 1)
+      {
+         return 0; // no intersection
+      }
+
+      if (w1 == 1 || w2 == 1 || (w1 == 0 && w2 == 0))
+      {
+         return 3; // intersect the vertex
+      }
+
+      if (w1 + w2 == 1 || w1 == 0 || w2 == 0)
+      {
+         return 2; // intersect the edge
+      }
+
+      return 1; // intersect in the triangle
+   }
+
 }

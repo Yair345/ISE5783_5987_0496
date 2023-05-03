@@ -125,4 +125,9 @@ public class Point
 	{
 		return xyz.d1;
 	}
+
+	public double getY()
+	{
+		return xyz.d2;
+	}
 }
