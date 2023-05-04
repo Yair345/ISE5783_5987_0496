@@ -129,8 +129,7 @@ public class Plane implements Geometry
 		
 		List<Point> intersect = new LinkedList<>();
 		
-		Vector p = ray.getDir().scale(t);
-		intersect.add(ray.getP0().add(p));
+		intersect.add(ray.getPoint(t));
 		
 		return intersect;
 	}

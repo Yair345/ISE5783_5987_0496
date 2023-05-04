@@ -102,14 +102,12 @@ public class Sphere extends RadialGeometry
         // might be only 1 intersection
         if (t1 > 0)
         {
-            Vector temp = ray.getDir().scale(t1);
-            intersections.add(ray.getP0().add(temp));
+            intersections.add(ray.getPoint(t1));
         }
 
         if (t2 > 0)
         {
-            Vector temp = ray.getDir().scale(t2);
-            intersections.add(ray.getP0().add(temp));
+            intersections.add(ray.getPoint(t2));
         }
 
         return intersections;

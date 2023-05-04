@@ -27,7 +27,24 @@ public class Triangle extends Polygon
     @Override
     public List<Point> findIntersections(Ray ray)
     {
-        return null;
+        List<Point> intersections = plane.findIntersections(ray); // first find the suspect point
+        
+        // if it intersects the plane
+        if (intersections == null)
+        {
+            return null;
+        }
+        
+        Point intersect = intersections.get(0);
+        
+        int ans = super.inTriangle(intersect, vertices.get(0), vertices.get(1), vertices.get(2));
+        
+        if (ans != 1)
+        {
+            return null;
+        }
+        
+        return intersections;
     }
 }
 

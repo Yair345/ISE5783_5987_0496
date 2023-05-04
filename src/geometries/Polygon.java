@@ -78,28 +78,104 @@ public class Polygon implements Geometry
             throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
       }
    }
-
+   
+   /**
+    * Returns the normal vector of the polygon at the specified point.
+    * The normal vector is the same for every point on the polygon surface.
+    * @param point The point on the polygon surface.
+    *
+    * @return The normal vector of the polygon at the specified point.
+    */
    @Override
    public Vector getNormal(Point point) { return plane.getNormal(); }
    
+   /**
+    * Finds the intersections between the polygon and a given ray.
+    * @param ray the ray to find intersections with
+    *
+    * @return a list of intersection points, or null if there are no intersections
+    */
    @Override
    public List<Point> findIntersections(Ray ray)
    {
-      return null;
+      List<Point> intersections = plane.findIntersections(ray); // first find the suspect point
+      
+      // if it intersects the plane
+      if (intersections == null)
+      {
+         return null;
+      }
+      
+      Point intersect = intersections.get(0); // for not using get function a couple of times
+      int sideCounter = 0, ans;
+      boolean found = false;
+      
+      for (int i = 1; i < vertices.size() - 1; i++)
+      {
+         ans = inTriangle(intersect, vertices.get(0), vertices.get(i), vertices.get(i + 1));
+         
+         if (ans == 1) // inside the triangle that contained in the polygon
+         {
+            found = true;
+            break;
+         }
+         
+         if (ans == 3) // vertex
+         {
+            return null;
+         }
+         
+         if (ans == 2) // side of the triangle
+         {
+            sideCounter++;
+            if (sideCounter == 2)
+            {
+               found = true;
+               break;
+            }
+         }
+      }
+      
+      if (!found)
+      {
+         return null;
+      }
+      
+      return intersections;
    }
-
+   
+   /**
+    Computes the intersection between a point and a triangle
+    
+    @param p The point to check intersection with
+    @param a First point of the triangle
+    @param b Second point of the triangle
+    @param c Third point of the triangle
+    
+    @return 0 if no intersection, 1 if intersection inside the triangle, 2 if intersection with an edge,
+    3 if intersection with a vertex
+    */
    protected int inTriangle(Point p, Point a, Point b, Point c)
    {
-      Vector vec1 = c.subtract(a);
-      Vector vec2 = b.subtract(a);
-
       double w1, w2, temp; // w1 and w2 is a coefficients of vec1 and vec2
       double ax = a.getX(), ay = a.getY(), bx = b.getX(), by = b.getY(), cx = c.getX(), cy = c.getY(), px = p.getX(), py = p.getY();
-
-      temp = (by - ay) * (cx -ax) - (bx - ax) * (cy - ay);
-      w1 = (ax * (cy - ay) + (py - ay) * (cx - ax) - py * (cy - ay)) / temp;
+      
+      /*
+       Development of the equation: p = a + w1 * (c - a) + w2 * (b - a)
+       the equation separate into 2 equation: one for x coordination and another one for y coordination
+       we also can replace the x or y coordination in z but at the end it will be the same
+       */
+      temp = (by - ay) * (cx - ax) - (bx - ax) * (cy - ay);
+      w1 = (ax * (cy - ay) + (py - ay) * (cx - ax) - px * (cy - ay)) / temp;
       w2 = (py - ay - w1 * (by - ay)) / (cy - ay);
 
+      if (cy == ay)
+      {
+         temp = (cy - ay) * (bx - ax) - (cx - ax) * (by - ay);
+         w1 = (ax * (by - ay) + (py - ay) * (bx - ax) - px * (by - ay)) / temp;
+         w2 = (py - ay - w1 * (cy - ay)) / (by - ay);
+      }
+      
       if (w1 < 0 || w2 < 0 || w1 > 1 || w2 > 1)
       {
          return 0; // no intersection
@@ -115,7 +191,7 @@ public class Polygon implements Geometry
          return 2; // intersect the edge
       }
 
-      return 1; // intersect in the triangle
+      return 1; // intersect inside the triangle
    }
 
 }

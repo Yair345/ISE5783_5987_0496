@@ -54,6 +54,18 @@ public class Ray
 	}
 	
 	/**
+	 * Returns the point on the ray at a given distance from its origin.
+	 *
+	 * @param t the distance from the origin of the ray to the desired point
+	 * @return the point on the ray at the specified distance from its origin
+	 */
+	public Point getPoint(double t)
+	{
+		Vector temp = dir.scale(t);
+		return p0.add(temp);
+	}
+	
+	/**
 	 * Determines whether the specified object is equal to this Ray object.
 	 *
 	 * @param o the object to compare.
