@@ -165,15 +165,17 @@ public class Polygon implements Geometry
        the equation separate into 2 equation: one for x coordination and another one for y coordination
        we also can replace the x or y coordination in z but at the end it will be the same
        */
-      temp = (by - ay) * (cx - ax) - (bx - ax) * (cy - ay);
-      w1 = (ax * (cy - ay) + (py - ay) * (cx - ax) - px * (cy - ay)) / temp;
-      w2 = (py - ay - w1 * (by - ay)) / (cy - ay);
-
-      if (cy == ay)
+      if (cy == ay) // edge case
       {
          temp = (cy - ay) * (bx - ax) - (cx - ax) * (by - ay);
          w1 = (ax * (by - ay) + (py - ay) * (bx - ax) - px * (by - ay)) / temp;
          w2 = (py - ay - w1 * (cy - ay)) / (by - ay);
+      }
+      else
+      {
+         temp = (by - ay) * (cx - ax) - (bx - ax) * (cy - ay);
+         w1 = (ax * (cy - ay) + (py - ay) * (cx - ax) - px * (cy - ay)) / temp;
+         w2 = (py - ay - w1 * (by - ay)) / (cy - ay);
       }
       
       if (w1 < 0 || w2 < 0 || w1 > 1 || w2 > 1)
