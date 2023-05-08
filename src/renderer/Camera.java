@@ -2,6 +2,7 @@ package renderer;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 import static primitives.Util.isZero;
@@ -117,9 +118,31 @@ public class Camera
 	 */
 	public Ray constructRay(int nX, int nY, int j, int i)
 	{
-		return null;
+		Point Pc = p0.add(vTo.scale(distance)); // view plane center
+
+		// Ratio
+		double Ry = height / nY;
+		double Rx = width / nX;
+
+		// Pij calculation
+		double Xj = (j - (nX - 1) / 2d) * Rx;
+		double Yi = ((nY - 1) / 2d - i) * Ry;
+
+		Point Pij = Pc;
+		if (!Util.isZero(Xj))
+		{
+			Pij = Pij.add(vRight.scale(Xj));
+		}
+		if (!Util.isZero(Yi))
+		{
+			Pij = Pij.add(vUp.scale(Yi));
+		}
+
+		Vector Vij = Pij.subtract(p0);
+
+		return new Ray(p0, Vij);
 	}
-	
+
 	/**
 	 * Getters for all fields
 	 * */

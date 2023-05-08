@@ -41,7 +41,9 @@ public class CameraIntegrationTests
 				Ray ray = camera.constructRay(nx, ny, j, i);
 				var intersections = intersectable.findIntersections(ray);
 				if (intersections != null)
-				{counter += intersections.size();}
+				{
+					counter += intersections.size();
+				}
 			}
 		}
 		
@@ -62,8 +64,8 @@ public class CameraIntegrationTests
 		assertEquals(2, sumOfIntersections(c1, s1), "wrong number of intersections sphere 01");
 		
 		// TC02: 18 intersections
-		Camera c2 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).
-				setVPDistance(1).setVPSize(9, 9);
+		Camera c2 = new Camera(new Point(0, 0, 1.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).
+				setVPDistance(1).setVPSize(1, 1);
 		Sphere s2 = new Sphere(2.5, new Point(0, 0, -2.5));
 		assertEquals(18, sumOfIntersections(c2, s2), "wrong number of intersections sphere 02");
 		
