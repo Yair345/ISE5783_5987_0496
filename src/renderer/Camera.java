@@ -77,6 +77,44 @@ public class Camera
 	}
 	
 	/**
+	 * Getters for all fields
+	 * */
+	public Point getP0()
+	{
+		return p0;
+	}
+	
+	public Vector getvTo()
+	{
+		return vTo;
+	}
+	
+	public Vector getvUp()
+	{
+		return vUp;
+	}
+	
+	public Vector getvRight()
+	{
+		return vRight;
+	}
+	
+	public double getWidth()
+	{
+		return width;
+	}
+	
+	public double getHeight()
+	{
+		return height;
+	}
+	
+	public double getDistance()
+	{
+		return distance;
+	}
+	
+	/**
 	 * Sets the size of the viewport.
 	 *
 	 * @param width the width of the viewport
@@ -118,22 +156,24 @@ public class Camera
 	 */
 	public Ray constructRay(int nX, int nY, int j, int i)
 	{
-		Point Pc = p0.add(vTo.scale(distance)); // view plane center
+		// view plane center
+		Point Pc = p0.add(vTo.scale(distance));
 
-		// Ratio
+		// Ratios of the pixel
 		double Ry = height / nY;
 		double Rx = width / nX;
 
-		// Pij calculation
+		// offsets of Pij in vUp axis and vRight axis respectively
 		double Xj = (j - (nX - 1) / 2d) * Rx;
 		double Yi = ((nY - 1) / 2d - i) * Ry;
-
+		
+		// Pij calculation
 		Point Pij = Pc;
-		if (!Util.isZero(Xj))
+		if (!isZero(Xj))
 		{
 			Pij = Pij.add(vRight.scale(Xj));
 		}
-		if (!Util.isZero(Yi))
+		if (!isZero(Yi))
 		{
 			Pij = Pij.add(vUp.scale(Yi));
 		}
@@ -143,41 +183,4 @@ public class Camera
 		return new Ray(p0, Vij);
 	}
 
-	/**
-	 * Getters for all fields
-	 * */
-	public Point getP0()
-	{
-		return p0;
-	}
-	
-	public Vector getvTo()
-	{
-		return vTo;
-	}
-	
-	public Vector getvUp()
-	{
-		return vUp;
-	}
-	
-	public Vector getvRight()
-	{
-		return vRight;
-	}
-	
-	public double getWidth()
-	{
-		return width;
-	}
-	
-	public double getHeight()
-	{
-		return height;
-	}
-	
-	public double getDistance()
-	{
-		return distance;
-	}
 }

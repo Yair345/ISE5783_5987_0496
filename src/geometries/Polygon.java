@@ -178,7 +178,7 @@ public class Polygon implements Geometry
          w2 = (py - ay - w1 * (by - ay)) / (cy - ay);
       }
       
-      if (w1 < 0 || w2 < 0 || w1 > 1 || w2 > 1)
+      if (w1 < 0 || w2 < 0 || w1 > 1 || w2 > 1 || w1 + w2 > 1)
       {
          return 0; // no intersection
       }
@@ -192,8 +192,9 @@ public class Polygon implements Geometry
       {
          return 2; // intersect the edge
       }
-
-      return 1; // intersect inside the triangle
+      
+      // intersect inside the triangle
+      return 1;
    }
 
 }

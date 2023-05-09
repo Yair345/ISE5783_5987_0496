@@ -21,24 +21,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CameraIntegrationTests
 {
 	/**
-	 *
 	 * The sumOfIntersections method calculates the sum of the number of intersections between a camera ray and an Intersectable object.
 	 * It constructs rays for each pixel in the view plane of the camera and checks the number of intersections between each ray and the Intersectable object.
 	 *
-	 * @param camera - the camera that constructs the rays
+	 * @param camera        - the camera that constructs the rays
 	 * @param intersectable - the object to find intersections with
-	 *
 	 * @return the sum of the number of intersections for each ray
 	 */
 	private int sumOfIntersections(Camera camera, Intersectable intersectable)
 	{
-		int nx = 3, ny = 3, counter = 0;
+		int nx = 3, ny = 3;
+		int counter = 0;
 		
-		for (int i = 0; i < nx; i++)
+		for (int row = 0; row < nx; row++)
 		{
-			for (int j = 0; j < ny; j++)
+			for (int column = 0; column < ny; column++)
 			{
-				Ray ray = camera.constructRay(nx, ny, j, i);
+				Ray ray = camera.constructRay(nx, ny, column, row);
 				var intersections = intersectable.findIntersections(ray);
 				if (intersections != null)
 				{
@@ -58,8 +57,12 @@ public class CameraIntegrationTests
 	public void testSphereIntegration()
 	{
 		// TC01: 2 intersections
-		Camera c1 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0)).
-				setVPDistance(1).setVPSize(9, 9);
+		Camera c1 = new Camera(
+				new Point(0, 0, 0),
+				new Vector(0, 0, -1), new Vector(0, 1, 0))
+				.setVPDistance(1)
+				.setVPSize(9, 9);
+		
 		Sphere s1 = new Sphere(1, new Point(0, 0, -3));
 		assertEquals(2, sumOfIntersections(c1, s1), "wrong number of intersections sphere 01");
 		
@@ -71,7 +74,7 @@ public class CameraIntegrationTests
 		
 		// TC03: 10 intersections
 		Camera c3 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0)).
-				setVPDistance(1).setVPSize(9, 9);
+				setVPDistance(1).setVPSize(3, 3);
 		Sphere s3 = new Sphere(2, new Point(0, 0, -2));
 		assertEquals(10, sumOfIntersections(c3, s3), "wrong number of intersections sphere 03");
 		
@@ -94,24 +97,30 @@ public class CameraIntegrationTests
 	@Test
 	public void testPlaneIntegration()
 	{
-		Camera camera = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0)).
-				setVPDistance(1).setVPSize(9, 9);
+		Camera camera = new Camera(
+				new Point(0, 0, 0),
+				new Vector(0, 0, -1), new Vector(0, 1, 0))
+				.setVPDistance(1)
+				.setVPSize(3, 3);
+		
+		Camera camera2 = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, -1, 0)).
+				setVPDistance(1).setVPSize(3, 3);
 		
 		// TC01: 9 intersections
-		Plane p1 = new Plane(new Point(0,0,-3), new Vector(0,0,1));
+		Plane p1 = new Plane(new Point(0, 0, -3), new Vector(0, 0, 1));
 		assertEquals(9, sumOfIntersections(camera, p1), "wrong number of intersections plane 01");
 		
 		// TC02: 9 intersections
-		Plane p2 = new Plane(new Point(0,0,-5), new Vector(0,1,2));
+		Plane p2 = new Plane(new Point(0, 0, -5), new Vector(0, 1, 2));
 		assertEquals(9, sumOfIntersections(camera, p2), "wrong number of intersections plane 02");
 		
 		// TC03: 6 intersections
-		Plane p3 = new Plane(new Point(0,0,-5), new Vector(0,1,1));
+		Plane p3 = new Plane(new Point(0, 0, -5), new Vector(0, 1, 1));
 		assertEquals(6, sumOfIntersections(camera, p3), "wrong number of intersections plane 03");
 		
 		// TC04: no intersections
-		Plane p4 = new Plane(new Point(0,0,5), new Vector(0,0,1));
-		assertEquals(0, sumOfIntersections(camera, p3), "wrong number of intersections plane 04");
+		Plane p4 = new Plane(new Point(0, 0, 5), new Vector(0, 0, -1));
+		assertEquals(0, sumOfIntersections(camera, p4), "wrong number of intersections plane 04");
 	}
 	
 	/**
@@ -120,15 +129,22 @@ public class CameraIntegrationTests
 	@Test
 	public void testTriangleIntegration()
 	{
-		Camera camera = new Camera(new Point(0, 0, 0), new Vector(0, 0, -1), new Vector(0, 1, 0)).
-				setVPDistance(1).setVPSize(9, 9);
+		Camera camera = new Camera(
+				new Point(0, 0, 0),
+				new Vector(0, 0, -1),
+				new Vector(0, 1, 0))
+				.setVPDistance(1)
+				.setVPSize(9, 9);
 		
 		// TC01: 1 intersections
-		Triangle t1 = new Triangle(new Point(0,1,-2), new Point(1,-1,-2), new Point(-1,-1,-2));
+		Triangle t1 = new Triangle(
+				new Point(0, 1, -2),
+				new Point(1, -1, -2),
+				new Point(-1, -1, -2));
 		assertEquals(1, sumOfIntersections(camera, t1), "wrong number of intersections triangle 01");
 		
 		// TC01: 2 intersections
-		Triangle t2 = new Triangle(new Point(0,20,-2), new Point(1,-1,-2), new Point(-1,-1,-2));
+		Triangle t2 = new Triangle(new Point(0, 20, -2), new Point(1, -1, -2), new Point(-1, -1, -2));
 		assertEquals(2, sumOfIntersections(camera, t2), "wrong number of intersections triangle 02");
 	}
 }
