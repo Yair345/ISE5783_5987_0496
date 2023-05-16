@@ -147,6 +147,8 @@ public class Polygon implements Geometry
    /**
     Computes the intersection between a point and a triangle
     
+    Using <a href="https://www.youtube.com/watch?v=HYAgJN3x4GA">this</a> method
+    
     @param p The point to check intersection with
     @param a First point of the triangle
     @param b Second point of the triangle

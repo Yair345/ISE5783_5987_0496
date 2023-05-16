@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Finished implement help method">
+    <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Finished stage 4">
+      <change afterPath="$PROJECT_DIR$/src/lighting/AmbientLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/primitives/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/ImageWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scene/Scene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unitTests/renderer/ImageWriterTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/geometries/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Polygon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/renderer/CameraIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/CameraIntegrationTests.java" afterDir="false" />
     </list>
     <list id="f3088997-f221-44a7-acca-0f6c72b7cb53" name="Changes by yairl" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,8 +73,9 @@
       <recent name="geometries" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\unitTests\geometries" />
       <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\src\primitives" />
+      <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\src\renderer" />
+      <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\unitTests\geometries" />
       <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\src\geometries" />
       <recent name="C:\Users\yairl\IdeaProjects\ISE5783_5987_0496\src" />
     </key>
@@ -84,7 +88,7 @@
       <recent name="primitives" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CameraIntegrationTests.testPlaneIntegration">
+  <component name="RunManager" selected="JUnit.ImageWriterTests.testWriteToImage">
     <configuration name="CameraIntegrationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
@@ -148,7 +152,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CameraTests.testConstructRay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ImageWriterTests.testWriteToImage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
         <pattern>
@@ -157,8 +161,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.CameraTests" />
-      <option name="METHOD_NAME" value="testConstructRay" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ImageWriterTests" />
+      <option name="METHOD_NAME" value="testWriteToImage" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -166,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ImageWriterTests.testWriteToImage" />
         <item itemvalue="JUnit.CameraIntegrationTests.testPlaneIntegration" />
         <item itemvalue="JUnit.CameraIntegrationTests" />
         <item itemvalue="JUnit.CameraIntegrationTests.testSphereIntegration" />
         <item itemvalue="JUnit.CameraIntegrationTests.testTriangleIntegration" />
-        <item itemvalue="JUnit.CameraTests.testConstructRay" />
       </list>
     </recent_temporary>
   </component>
@@ -239,7 +243,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1683193262168</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎-00009" summary="Finished stage 4">
+      <created>1683646522826</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL‎-00009" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1683646522826</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -262,7 +273,8 @@
     <MESSAGE value="Finished implement Geometries and it's tests, and left to do Polygon's test." />
     <MESSAGE value="Finished comments and JavaDoc" />
     <MESSAGE value="Finished Polygon and Triangle findIntersection calculation. Also refactoring Ray.&#10;Finished Stage 3." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Polygon and Triangle findIntersection calculation. Also refactoring Ray.&#10;Finished Stage 3." />
+    <MESSAGE value="Finished stage 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished stage 4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -271,16 +283,6 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="7" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/geometries/Polygon.java</url>
-          <line>159</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/unitTests/renderer/CameraIntegrationTests.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
