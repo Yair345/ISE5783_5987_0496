@@ -1,9 +1,8 @@
 package renderer;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
+
+import java.util.MissingResourceException;
 
 import static primitives.Util.isZero;
 
@@ -52,6 +51,16 @@ public class Camera
 	 * the distance from the camera to the view plane, in world coordinates
 	 */
 	private double distance;
+
+	/**
+	 * The imageWriter field represents the image writer used by the camera.
+	 */
+	private ImageWriter imageWriter;
+
+	/**
+	 * The rayTracerBase field represents the ray tracer base used by the camera.
+	 */
+	private RayTracerBase rayTracerBase;
 	
 	/**
 	 * Constructs a new camera with the given position, target vector and up vector.
@@ -124,6 +133,11 @@ public class Camera
 	 */
 	public Camera setVPSize(double width, double height)
 	{
+		if (width <= 0 || height <= 0)
+		{
+			throw new IllegalArgumentException("Fields cannot be less then 0 (setVPSize)");
+		}
+
 		this.width = width;
 		this.height = height;
 		
@@ -139,8 +153,39 @@ public class Camera
 	 */
 	public Camera setVPDistance(double distance)
 	{
+		if (distance <= 0)
+		{
+			throw new IllegalArgumentException("Fields cannot be 0 (setVPDistance)");
+		}
+
 		this.distance = distance;
 		
+		return this;
+	}
+
+	/**
+	 * Sets the image writer for the camera.
+	 *
+	 * @param imageWriter The image writer to be set.
+	 * @return The camera instance with the updated image writer.
+	 */
+	public Camera setImageWriter(ImageWriter imageWriter)
+	{
+		this.imageWriter = imageWriter;
+
+		return this;
+	}
+
+	/**
+	 * Sets the ray tracer base for the camera.
+	 *
+	 * @param rayTracerBase The ray tracer base to be set.
+	 * @return The camera instance with the updated ray tracer base.
+	 */
+	public Camera setRayTraceBase(RayTracerBase rayTracerBase)
+	{
+		this.rayTracerBase = rayTracerBase;
+
 		return this;
 	}
 	
@@ -183,4 +228,88 @@ public class Camera
 		return new Ray(p0, Vij);
 	}
 
+	/**
+
+	 * Renders the image using the configured image writer and ray tracer base.
+	 * Throws an exception if the image writer or ray tracer base is not initialized.
+	 *
+	 * @throws UnsupportedOperationException if the image writer or ray tracer base is not initialized.
+	 */
+	public void renderImage()
+	{
+		// check if valid parameters
+		try
+		{
+			if (imageWriter == null)
+			{
+				throw new MissingResourceException("image writer not initialize", ImageWriter.class.getName(), "");
+			}
+
+			if (rayTracerBase == null)
+			{
+				throw new MissingResourceException("ray tracer base initialize", RayTracerBase.class.getName(), "");
+			}
+		}
+		catch (MissingResourceException e)
+		{
+			throw new UnsupportedOperationException(e.getClassName() + "not initialize yet");
+		}
+	}
+
+	/**
+
+	 * Prints a grid on the image with a specified interval and color.
+	 * Throws an exception if rendering the image is not supported or if the required resources are missing.
+	 *
+	 * @param interval The interval between grid lines.
+	 * @param color The color of the grid lines.
+	 *
+	 * @throws MissingResourceException if rendering the image is not supported or if the required resources are missing.
+	 * @throws UnsupportedOperationException if the image writer or ray tracer base is not initialized.
+	 */
+	public void printGrid(int interval, Color color)
+	{
+		// check if valid parameters
+		try
+		{
+			renderImage();
+		}
+		catch (UnsupportedOperationException e)
+		{
+			throw new MissingResourceException(e.getMessage(), Camera.class.getName(), "");
+		}
+
+		// paint the grid
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				if (i % interval == 0 || j % interval == 0)
+				{
+					imageWriter.writePixel(i, j, color);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Writes the rendered image to the output.
+	 * Throws an exception if rendering the image is not supported or if the required resources are missing.
+	 *
+	 * @throws MissingResourceException if rendering the image is not supported or if the required resources are missing.
+	 * @throws UnsupportedOperationException if the image writer or ray tracer base is not initialized.
+	 */
+	public void writeToImage()
+	{
+		try
+		{
+			renderImage();
+		}
+		catch (UnsupportedOperationException e)
+		{
+			throw new MissingResourceException(e.getMessage(), Camera.class.getName(), "");
+		}
+
+		imageWriter.writeToImage();
+	}
 }

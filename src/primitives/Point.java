@@ -7,10 +7,11 @@ import static primitives.Double3.ZERO;
 /**
  * This class present a point
  *
- * @author Yair Lasri
+ * @author Yair Lasri and Noam Benisho
  */
 public class Point
 {
+	public static final Point ZERO = new Point(0,0,0);
 	final Double3 xyz;
 	
 	/**

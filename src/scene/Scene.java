@@ -73,6 +73,15 @@ public class Scene
 		{
 			this.name = name;
 		}
+
+		/**
+		 * Build scene using builder pattern
+		 * @return Scene object
+		 */
+		public Scene build()
+		{
+			return new Scene(this);
+		}
 		
 		/**
 		 * Sets the background color of the scene.
