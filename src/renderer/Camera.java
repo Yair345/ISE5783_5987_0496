@@ -182,7 +182,7 @@ public class Camera
 	 * @param rayTracerBase The ray tracer base to be set.
 	 * @return The camera instance with the updated ray tracer base.
 	 */
-	public Camera setRayTraceBase(RayTracerBase rayTracerBase)
+	public Camera setRayTracer(RayTracerBase rayTracerBase)
 	{
 		this.rayTracerBase = rayTracerBase;
 
@@ -240,24 +240,43 @@ public class Camera
 		// check if valid parameters
 		try
 		{
-			if (imageWriter == null)
-			{
-				throw new MissingResourceException("image writer not initialize", ImageWriter.class.getName(), "");
-			}
-
-			if (rayTracerBase == null)
-			{
-				throw new MissingResourceException("ray tracer base initialize", RayTracerBase.class.getName(), "");
-			}
+			testValidity();
 		}
-		catch (MissingResourceException e)
+		catch (UnsupportedOperationException e)
 		{
-			throw new UnsupportedOperationException(e.getClassName() + "not initialize yet");
+			throw new MissingResourceException(e.getMessage(), Camera.class.getName(), "");
 		}
+		
+		int Nx = imageWriter.getNx();
+		int Ny = imageWriter.getNy();
+		
+		for (int row = 0; row < Ny; row++)
+		{
+			for (int col = 0; col < Nx; col++)
+			{
+				Color color = castRay(Nx, Ny, row, col);
+				imageWriter.writePixel(row, col, color);
+			}
+		}
+	}
+	
+	/**
+	 * Casts a ray into the scene at the specified row and column in the image and returns the resulting
+	 * color of the intersection point.
+	 * @param nX the number of pixels in the x-axis of the image
+	 * @param nY the number of pixels in the y-axis of the image
+	 * @param row the row of the pixel in the image
+	 * @param col the column of the pixel in the image
+	 * @return the color of the intersection point of the casted ray in the scene
+	 */
+	private Color castRay(int nX, int nY, int row, int col)
+	{
+		Ray ray = constructRay(nX, nY, row, col);
+		Color color = rayTracerBase.traceRay(ray);
+		return color;
 	}
 
 	/**
-
 	 * Prints a grid on the image with a specified interval and color.
 	 * Throws an exception if rendering the image is not supported or if the required resources are missing.
 	 *
@@ -272,24 +291,34 @@ public class Camera
 		// check if valid parameters
 		try
 		{
-			renderImage();
+			testValidity();
 		}
 		catch (UnsupportedOperationException e)
 		{
 			throw new MissingResourceException(e.getMessage(), Camera.class.getName(), "");
 		}
+		
+		int nX = imageWriter.getNx();
+		int nY = imageWriter.getNy();
 
 		// paint the grid
-		for (int i = 0; i < height; i++)
+		for (int col = 0; col < nY; col += interval)
 		{
-			for (int j = 0; j < width; j++)
+			for (int row = 0; row < nX; row++)
 			{
-				if (i % interval == 0 || j % interval == 0)
-				{
-					imageWriter.writePixel(i, j, color);
-				}
+				imageWriter.writePixel(col, row, color);
 			}
 		}
+
+		for (int col = 0; col < nY; col++)
+		{
+			for (int row = 0; row < nX; row += interval)
+			{
+				imageWriter.writePixel(col, row, color);
+			}
+		}
+		
+		imageWriter.writeToImage();
 	}
 
 	/**
@@ -303,7 +332,7 @@ public class Camera
 	{
 		try
 		{
-			renderImage();
+			testValidity();
 		}
 		catch (UnsupportedOperationException e)
 		{
@@ -311,5 +340,32 @@ public class Camera
 		}
 
 		imageWriter.writeToImage();
+	}
+	
+	/**
+	 * Checks the validity of the imageWriter and rayTracerBase objects. If either object is null,
+	 * a MissingResourceException is thrown with a message indicating which resource was not initialized.
+	 * If the exception is caught, it is rethrown as an UnsupportedOperationException.
+	 *
+	 * @throws UnsupportedOperationException if either the imageWriter or rayTracerBase object is null
+	 */
+	private void testValidity()
+	{
+		try
+		{
+			if (imageWriter == null)
+			{
+				throw new MissingResourceException("image writer not initialize", ImageWriter.class.getName(), "");
+			}
+			
+			if (rayTracerBase == null)
+			{
+				throw new MissingResourceException("ray tracer base initialize", RayTracerBase.class.getName(), "");
+			}
+		}
+		catch (MissingResourceException e)
+		{
+			throw new UnsupportedOperationException(e.getClassName() + "not initialize yet");
+		}
 	}
 }
