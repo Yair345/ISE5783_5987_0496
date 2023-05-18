@@ -3,5 +3,6 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="google.code.gson" level="project" />
   </component>
 </module>

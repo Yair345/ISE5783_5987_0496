@@ -1,9 +1,10 @@
 package renderer;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
+import parser.Json;
 import primitives.Color;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -50,5 +51,28 @@ class ImageWriterTests
 		}
 		
 		imageWriter.writeToImage();
+	}
+	
+	/**
+	 * A unit test method to test the creation of a JSON file from an ImageWriter object.
+	 */
+	@Test
+	void testCreateJson()
+	{
+		ImageWriter imageWriter = new ImageWriter("Json Test", 1500, 1000);
+		
+		Json.imageWriterToJson(imageWriter, System.getProperty("user.dir") + "/json/imageWriterJson.json");
+	}
+	
+	/**
+	 * A unit test method to test deserialization of an ImageWriter object from a JSON file.
+	 */
+	@Test
+	void testFromJson()
+	{
+		ImageWriter imageWriterTest = Json.imageWriterFromJson(System.getProperty("user.dir") + "/json/imageWriterJson.json");
+		ImageWriter imageWriterReal = new ImageWriter("Json Test", 1500, 1000);
+		
+		assertTrue(imageWriterReal.equals(imageWriterTest), "Json deserialize");
 	}
 }

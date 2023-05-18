@@ -1,10 +1,13 @@
 package renderer;
 
+import com.google.gson.Gson;
 import primitives.Color;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -70,6 +73,11 @@ public class ImageWriter
 		return nX;
 	}
 	
+	public String getImageName()
+	{
+		return imageName;
+	}
+	
 	// ***************** Operations ******************** //
 	
 	/**
@@ -103,6 +111,12 @@ public class ImageWriter
 		image.setRGB(xIndex, yIndex, color.getColor().getRGB());
 	}
 	
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 *
+	 * @param o the reference object with which to compare
+	 * @return true if this object is the same as the o argument; false otherwise
+	 */
 	@Override
 	public boolean equals(Object o)
 	{
@@ -111,6 +125,10 @@ public class ImageWriter
 		return nX == that.nX && nY == that.nY && Objects.equals(imageName, that.imageName);
 	}
 	
+	/**
+	 * Returns a hash code value for the object.
+	 * @return a hash code value for this object
+	 */
 	@Override
 	public int hashCode()
 	{
