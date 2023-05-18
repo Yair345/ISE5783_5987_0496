@@ -1,6 +1,5 @@
 package renderer;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 
@@ -51,37 +50,5 @@ class ImageWriterTests
 		}
 		
 		imageWriter.writeToImage();
-	}
-	
-	@Test
-	void testCreateJson()
-	{
-		int nx = 800;
-		int ny = 500;
-		
-		ImageWriter imageWriter = new ImageWriter("firstTest", nx, ny);
-		ImageWriter.JsonImageWriter jsonImageWriter = new ImageWriter.JsonImageWriter(imageWriter);
-		
-		Gson gson = new Gson();
-		
-		try
-		{
-			FileWriter fileWriter = new FileWriter("imageWriter.json");
-			gson.toJson(jsonImageWriter, fileWriter);
-			fileWriter.close();
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
-	
-	@Test
-	void testFromJson()
-	{
-		ImageWriter imageWriterTest = ImageWriter.fromJson("imageWriter.json");
-		ImageWriter imageWriterReal = new ImageWriter("Json Test", 1500, 1000);
-		
-		assertTrue(imageWriterReal.equals(imageWriterTest), "Json deserialize");
 	}
 }

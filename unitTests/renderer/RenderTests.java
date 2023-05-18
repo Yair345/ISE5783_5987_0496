@@ -11,6 +11,7 @@ import primitives.Vector;
 import scene.Scene;
 
 import static java.awt.Color.YELLOW;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test rendering a basic image
@@ -106,7 +107,7 @@ public class RenderTests
 //	@Test
 //	public void basicRenderXml()
 //	{
-//		Scene scene = new Scene("XML Test scene");
+//		Scene scene = Scene.fromJson(System.getProperty("user.dir") + "\\json\\scene.json");
 //		// enter XML file name and parse from XML file into scene object
 //		// using the code you added in appropriate packages
 //		// ...
@@ -114,7 +115,7 @@ public class RenderTests
 //
 //		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))     //
 //				.setVPDistance(100)                                                                //
-//				.setVPSize(500, 500).setImageWriter(new ImageWriter("xml render test", 1000, 1000))
+//				.setVPSize(500, 500).setImageWriter(new ImageWriter("Json render test", 1000, 1000))
 //				.setRayTracer(new RayTracerBasic(scene));
 //		camera.renderImage();
 //		camera.printGrid(100, new Color(YELLOW));
