@@ -1,13 +1,10 @@
 package renderer;
 
-import com.google.gson.Gson;
 import primitives.Color;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -118,42 +115,5 @@ public class ImageWriter
 	public int hashCode()
 	{
 		return Objects.hash(nX, nY, imageName);
-	}
-	
-	public static ImageWriter fromJson(String filePath)
-	{
-		Gson gson = new Gson();
-		JsonImageWriter jsonImageWriter;
-		
-		try
-		{
-			FileReader fileReader = new FileReader(filePath);
-			jsonImageWriter = gson.fromJson(fileReader, JsonImageWriter.class);
-		}
-		catch (FileNotFoundException e)
-		{
-			throw new RuntimeException(e);
-		}
-		
-		return new ImageWriter(jsonImageWriter.name, jsonImageWriter.nX, jsonImageWriter.nY);
-	}
-	
-	public static class JsonImageWriter
-	{
-		private int nX;
-		private int nY;
-		private String name;
-		
-		public JsonImageWriter(int nX, int nY, String name)
-		{
-			this.name = name;
-			this.nX = nX;
-			this.nY = nY;
-		}
-		
-		public JsonImageWriter(ImageWriter imageWriter)
-		{
-			this(imageWriter.nX, imageWriter.nY, imageWriter.imageName);
-		}
 	}
 }

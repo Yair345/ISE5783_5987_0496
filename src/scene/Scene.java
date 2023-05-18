@@ -4,6 +4,12 @@ import geometries.Geometries;
 import lighting.AmbientLight;
 import primitives.Color;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * The Scene class represents a scene with a name, background color, geometries, and ambient light.
  *
@@ -118,5 +124,19 @@ public class Scene
 			this.geometries = geometries;
 			return this;
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) {return true;}
+		if (!(o instanceof Scene scene)) {return false;}
+		return Objects.equals(name, scene.name) && Objects.equals(background, scene.background) && Objects.equals(geometries, scene.geometries) && Objects.equals(ambientLight, scene.ambientLight);
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(name, background, geometries, ambientLight);
 	}
 }
