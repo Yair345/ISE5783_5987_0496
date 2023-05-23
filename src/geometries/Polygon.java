@@ -11,7 +11,7 @@ import primitives.Vector;
 /** Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
  * @author Dan */
-public class Polygon implements Geometry
+public class Polygon extends Geometry
 {
    /** List of polygon's vertices */
    protected final List<Point> vertices;
@@ -96,23 +96,23 @@ public class Polygon implements Geometry
     * @return a list of intersection points, or null if there are no intersections
     */
    @Override
-   public List<Point> findIntersections(Ray ray)
+   public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
    {
-      List<Point> intersections = plane.findIntersections(ray); // first find the suspect point
+      List<GeoPoint> intersections = plane.findGeoIntersectionsHelper(ray); // first find the suspect point
       
-      // if it intersects the plane
+      // if it not intersects the plane
       if (intersections == null)
       {
          return null;
       }
       
-      Point intersect = intersections.get(0); // for not using get function a couple of times
+      GeoPoint intersect = intersections.get(0); // for not using get function a couple of times
       int sideCounter = 0, ans;
       boolean found = false;
       
       for (int i = 1; i < vertices.size() - 1; i++)
       {
-         ans = inTriangle(intersect, vertices.get(0), vertices.get(i), vertices.get(i + 1));
+         ans = inTriangle(intersect.point, vertices.get(0), vertices.get(i), vertices.get(i + 1));
          
          if (ans == 1) // inside the triangle that contained in the polygon
          {
@@ -141,7 +141,7 @@ public class Polygon implements Geometry
          return null;
       }
       
-      return intersections;
+      return List.of(new GeoPoint(this, intersect.point));
    }
    
    /**

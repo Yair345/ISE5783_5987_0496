@@ -5,7 +5,7 @@ package geometries;
  *
  * @author Yair and Noam
  */
-public abstract class RadialGeometry implements Geometry
+public abstract class RadialGeometry extends Geometry
 {
     /**
      * The radial attribute of the geometrical object.

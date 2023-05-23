@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Yair and Noam
  */
-public class Geometries implements Intersectable
+public class Geometries extends Intersectable
 {
 	
 	/**
@@ -62,12 +62,12 @@ public class Geometries implements Intersectable
 	 * @return a list of intersection points between the ray and the geometries, or null if there are no intersections.
 	 */
 	@Override
-	public List<Point> findIntersections(Ray ray)
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
 	{
-		List<Point> result = null;
+		List<GeoPoint> result = null;
 		for (var element : elements)
 		{
-			List<Point> elemPoints = element.findIntersections(ray);
+			List<GeoPoint> elemPoints = element.findGeoIntersectionsHelper(ray);
 			if (elemPoints != null)
 			{
 				if (result == null)

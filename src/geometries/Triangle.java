@@ -23,11 +23,18 @@ public class Triangle extends Polygon
     {
         super(p1, p2, p3);
     }
-    
+
+    /**
+     * Helper method for finding the geometric intersections between a ray and the triangle.
+     * Overrides the method from the superclass Geometry.
+     *
+     * @param ray The ray to intersect with the triangle.
+     * @return A list of geometric intersection points between the ray and the triangle.
+     */
     @Override
-    public List<Point> findIntersections(Ray ray)
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
-        List<Point> intersections = plane.findIntersections(ray); // first find the suspect point
+        List<GeoPoint> intersections = plane.findGeoIntersectionsHelper(ray); // first find the suspect point
         
         // if it intersects the plane
         if (intersections == null)
@@ -35,16 +42,16 @@ public class Triangle extends Polygon
             return null;
         }
         
-        Point intersect = intersections.get(0);
+        GeoPoint intersect = intersections.get(0);
         
-        int ans = super.inTriangle(intersect, vertices.get(0), vertices.get(1), vertices.get(2));
+        int ans = super.inTriangle(intersect.point, vertices.get(0), vertices.get(1), vertices.get(2));
         
         if (ans != 1)
         {
             return null;
         }
-        
-        return intersections;
+
+        return List.of(new GeoPoint(this, intersect.point));
     }
 }
 

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Yair and Noam
  */
-public class Plane implements Geometry
+public class Plane extends Geometry
 {
 	/**
 	 * The point on the plane.
@@ -97,7 +97,7 @@ public class Plane implements Geometry
 	 * @return a list of intersection points, or null if no intersections exist
 	 */
 	@Override
-	public List<Point> findIntersections(Ray ray)
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
 	{
 		double temp, t;
 		Vector vec;
@@ -127,9 +127,9 @@ public class Plane implements Geometry
 			return null;
 		}
 		
-		List<Point> intersect = new LinkedList<>();
+		List<GeoPoint> intersect = new LinkedList<>();
 		
-		intersect.add(ray.getPoint(t));
+		intersect.add(new GeoPoint(this, ray.getPoint(t)));
 		
 		return intersect;
 	}

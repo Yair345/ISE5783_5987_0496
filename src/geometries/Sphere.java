@@ -62,7 +62,7 @@ public class Sphere extends RadialGeometry
      * @return a list of intersection points, or {@code null} if there are no intersections
      */
     @Override
-    public List<Point> findIntersections(Ray ray)
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
     {
         Vector u;
         double tm, th;
@@ -97,17 +97,17 @@ public class Sphere extends RadialGeometry
             return null;
         }
 
-        List<Point> intersections = new LinkedList<>();
+        List<GeoPoint> intersections = new LinkedList<>();
 
         // might be only 1 intersection
         if (t1 > 0)
         {
-            intersections.add(ray.getPoint(t1));
+            intersections.add(new GeoPoint(this, ray.getPoint(t1)));
         }
 
         if (t2 > 0)
         {
-            intersections.add(ray.getPoint(t2));
+            intersections.add(new GeoPoint(this, ray.getPoint(t2)));
         }
 
         return intersections;

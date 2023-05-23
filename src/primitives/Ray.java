@@ -1,5 +1,8 @@
 package primitives;
 
+import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -67,14 +70,26 @@ public class Ray
 	}
 
 	/**
-	 * Finds the closest point in a given list of points to a reference point.
+	 * Finds the closest point from a list of points.
 	 *
-	 * @param list The list of points to search from.
-	 * @return The closest point to the reference point, or null if the list is empty.
+	 * @param points The list of points to search from.
+	 * @return The closest point, or null if the list is null or empty.
 	 */
-	public Point findClosestPoint(List<Point> list)
+	public Point findClosestPoint(List<Point> points)
 	{
-		Point closestPoint;
+		return points == null || points.isEmpty() ? null
+				: findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+	}
+
+	/**
+	 * Finds the closest GeoPoint in a given list of GeoPoints to a reference point.
+	 *
+	 * @param list The list of GeoPoints to search from.
+	 * @return The closest GeoPoint to the reference point, or null if the list is empty.
+	 */
+	public GeoPoint findClosestGeoPoint(List<GeoPoint> list)
+	{
+		GeoPoint closestPoint;
 		double minDistance, temp;
 
 		// null list
@@ -84,11 +99,11 @@ public class Ray
 		}
 
 		closestPoint = list.get(0);
-		minDistance = p0.distanceSquared(closestPoint);
+		minDistance = p0.distanceSquared(closestPoint.point);
 
-		for (Point p: list)
+		for (Intersectable.GeoPoint p: list)
 		{
-			temp = p0.distanceSquared(p);
+			temp = p0.distanceSquared(p.point);
 
 			if (temp < minDistance)
 			{
