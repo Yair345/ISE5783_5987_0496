@@ -235,7 +235,7 @@ public class Camera
 	 *
 	 * @throws UnsupportedOperationException if the image writer or ray tracer base is not initialized.
 	 */
-	public void renderImage()
+	public Camera renderImage()
 	{
 		// check if valid parameters
 		try
@@ -258,6 +258,7 @@ public class Camera
 				imageWriter.writePixel(row, col, color);
 			}
 		}
+		return this;
 	}
 	
 	/**
