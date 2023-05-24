@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Color;
+import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
 
@@ -15,14 +16,7 @@ public abstract class Geometry extends Intersectable
      * Base color of a shape
      */
     protected Color emission = Color.BLACK;
-
-    /**
-     * Returns the normal vector of the geometry at the specified point.
-     *
-     * @param p the point at which to compute the normal vector.
-     * @return the normal vector of the geometry at the specified point.
-     */
-    public abstract Vector getNormal(Point p);
+    private Material material = new Material();
 
     /**
      * Returns the emission color of the geometry.
@@ -32,6 +26,11 @@ public abstract class Geometry extends Intersectable
     public Color getEmission()
     {
         return emission;
+    }
+
+    public Material getMaterial()
+    {
+        return material;
     }
 
     /**
@@ -46,4 +45,19 @@ public abstract class Geometry extends Intersectable
 
         return this;
     }
+
+    public Geometry setMaterial(Material material)
+    {
+        this.material = material;
+
+        return this;
+    }
+
+    /**
+     * Returns the normal vector of the geometry at the specified point.
+     *
+     * @param p the point at which to compute the normal vector.
+     * @return the normal vector of the geometry at the specified point.
+     */
+    public abstract Vector getNormal(Point p);
 }

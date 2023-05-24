@@ -2,12 +2,15 @@ package scene;
 
 import geometries.Geometries;
 import lighting.AmbientLight;
+import lighting.LightSource;
 import primitives.Color;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,9 +22,10 @@ public class Scene
 {
 	// Fields
 	private final String name;
-	private final Color background;
-	private final Geometries geometries;
-	private AmbientLight ambientLight;
+	public final Color background;
+	public final Geometries geometries;
+	public AmbientLight ambientLight;
+	public final List<LightSource> lights;
 	
 	/**
 	 * Constructor using builder pattern.
@@ -34,31 +38,10 @@ public class Scene
 		background = builder.background;
 		ambientLight = builder.ambientLight;
 		geometries = builder.geometries;
+		lights = builder.lights;
 	}
 	
-	/**
-	* Getters
-	*/
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Color getBackground()
-	{
-		return background;
-	}
-	
-	public AmbientLight getAmbientLight()
-	{
-		return ambientLight;
-	}
-	
-	public Geometries getGeometries()
-	{
-		return geometries;
-	}
-	
+			
 	/**
 	 * The SceneBuilder class is a builder for constructing Scene objects.
 	 */
@@ -69,6 +52,7 @@ public class Scene
 		private Color background = Color.BLACK;
 		private AmbientLight ambientLight = AmbientLight.NONE;
 		private Geometries geometries = new Geometries();
+		private List<LightSource> lights = new LinkedList<>();
 		
 		/**
 		 * Constructor.
@@ -122,6 +106,12 @@ public class Scene
 		public SceneBuilder setGeometries(Geometries geometries)
 		{
 			this.geometries = geometries;
+			return this;
+		}
+
+		public SceneBuilder setLights(List<LightSource> lights)
+		{
+			this.lights = lights;
 			return this;
 		}
 	}
