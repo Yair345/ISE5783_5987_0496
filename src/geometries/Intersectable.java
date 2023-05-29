@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This interface represents an object in 3D space that can be intersected by a ray.
+ * This abstract class represents an object in 3D space that can be intersected by a ray.
  *
  * @author Yair and Noam
  */

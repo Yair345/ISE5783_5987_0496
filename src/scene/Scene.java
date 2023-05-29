@@ -108,7 +108,13 @@ public class Scene
 			this.geometries = geometries;
 			return this;
 		}
-
+		
+		/**
+		 * Sets the list of light sources in the scene.
+		 *
+		 * @param lights the list of light sources
+		 * @return the updated SceneBuilder object
+		 */
 		public SceneBuilder setLights(List<LightSource> lights)
 		{
 			this.lights = lights;
