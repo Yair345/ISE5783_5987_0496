@@ -7,6 +7,7 @@ import primitives.Vector;
 import java.util.LinkedList;
 import java.util.List;
 import static java.lang.Math.sqrt;
+import static primitives.Util.alignZero;
 
 /**
  * The Sphere class represents a sphere in 3D space.
@@ -56,13 +57,14 @@ public class Sphere extends RadialGeometry
     }
     
     /**
-     * Finds the intersection points of the given ray with this sphere, if any exist.
+     * Helper method to find the geometric intersections of a ray with the sphere.
      *
-     * @param ray the ray to find intersections with
-     * @return a list of intersection points, or {@code null} if there are no intersections
+     * @param ray the ray to intersect with the sphere
+     * @param maxDistance the maximum distance for intersection
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersection was found
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
     {
         Vector u;
         double tm, th;
@@ -88,29 +90,36 @@ public class Sphere extends RadialGeometry
             th = radius;
         }
 
-        double t1 = tm + th;
-        double t2 = tm - th;
+        double t1 = alignZero(tm + th);
+        double t2 = alignZero(tm - th);
 
         // we take only the positive values because the direction of ray
         if(t1 <= 0 && t2 <= 0)
         {
             return null;
         }
-
-        List<GeoPoint> intersections = new LinkedList<>();
+        
+        if(t1 > 0 && t2 > 0
+                && alignZero(t1 - maxDistance) < 0
+                && alignZero(t2 - maxDistance) < 0)
+        {
+            return List.of(
+                    new GeoPoint(this, ray.getPoint(t1)),
+                    new GeoPoint(this, ray.getPoint(t2)));
+        }
 
         // might be only 1 intersection
-        if (t1 > 0)
+        if (t1 > 0 && alignZero(t1 - maxDistance) < 0)
         {
-            intersections.add(new GeoPoint(this, ray.getPoint(t1)));
+            return List.of(new GeoPoint(this, ray.getPoint(t1)));
         }
-
-        if (t2 > 0)
+        
+        if (t2 > 0 && alignZero(t2 - maxDistance) < 0)
         {
-            intersections.add(new GeoPoint(this, ray.getPoint(t2)));
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }
-
-        return intersections;
+        
+        return null;
     }
 }
 

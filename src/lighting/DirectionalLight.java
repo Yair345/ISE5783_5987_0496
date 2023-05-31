@@ -47,4 +47,17 @@ public class DirectionalLight extends Light implements LightSource
     {
         return direction.normalize();
     }
+    
+    /**
+     * Returns the distance between the shape and a given point.
+     * This implementation always returns positive infinity, indicating an infinite distance.
+     *
+     * @param point the point to calculate the distance from
+     * @return the positive infinity distance
+     */
+    @Override
+    public double getDistance(Point point)
+    {
+        return Double.POSITIVE_INFINITY;
+    }
 }

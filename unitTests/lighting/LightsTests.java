@@ -95,8 +95,8 @@ public class LightsTests
 	private final Geometry triangle1 =
 			new Triangle(
 					vertices[0],
-					vertices[1],
-					vertices[2])
+					vertices[2],
+					vertices[1])
 			.setMaterial(material);
 	private final Geometry triangle2 =
 			new Triangle(
@@ -240,7 +240,9 @@ public class LightsTests
 				.writeToImage(); //
 	}
 	
-	
+	/**
+	 * Produce a picture of a sphere lighted by all the lights
+	 */
 	@Test
 	public void sphereMultipleLight()
 	{
@@ -266,6 +268,9 @@ public class LightsTests
 				.writeToImage(); //
 	}
 	
+	/**
+	 * Produce a picture of two triangles lighted by all the lights
+	 */
 	@Test
 	public void trianglesMultipleLight()
 	{

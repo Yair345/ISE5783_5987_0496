@@ -90,15 +90,16 @@ public class Polygon extends Geometry
    public Vector getNormal(Point point) { return plane.getNormal(); }
    
    /**
-    * Finds the intersections between the polygon and a given ray.
-    * @param ray the ray to find intersections with
+    * Helper method to find the geometric intersections of a ray with the polygon.
     *
-    * @return a list of intersection points, or null if there are no intersections
+    * @param ray the ray to intersect with the polygon
+    * @param maxDistance the maximum distance for intersection
+    * @return a list of GeoPoint objects representing the intersections, or null if no intersection was found
     */
    @Override
-   public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+   protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance)
    {
-      List<GeoPoint> intersections = plane.findGeoIntersectionsHelper(ray); // first find the suspect point
+      List<GeoPoint> intersections = plane.findGeoIntersectionsHelper(ray,maxDistance); // first find the suspect point
       
       // if it not intersects the plane
       if (intersections == null)

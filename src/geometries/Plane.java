@@ -7,6 +7,8 @@ import primitives.Vector;
 import java.util.LinkedList;
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * The Plane class represents a plane in 3D space.
  *
@@ -91,13 +93,14 @@ public class Plane extends Geometry
 	}
 	
 	/**
-	 * Find the intersection points of a ray with the plane
+	 * Helper method to find the geometric intersections of a ray with the plane.
 	 *
 	 * @param ray the ray to intersect with the plane
-	 * @return a list of intersection points, or null if no intersections exist
+	 * @param maxDistance the maximum distance for intersection
+	 * @return a list of GeoPoint objects representing the intersections, or null if no intersection was found
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
 	{
 		double temp, t;
 		Vector vec;
@@ -112,7 +115,7 @@ public class Plane extends Geometry
 		}
 		
 		// are they parallel?
-		t = normal.dotProduct(ray.getDir());
+		t = alignZero(normal.dotProduct(ray.getDir()));
 		
 		if (t == 0)
 		{ // they are parallel
@@ -127,11 +130,12 @@ public class Plane extends Geometry
 			return null;
 		}
 		
-		List<GeoPoint> intersect = new LinkedList<>();
+		if (alignZero(t - maxDistance) > 0)
+		{
+			return null;
+		}
 		
-		intersect.add(new GeoPoint(this, ray.getPoint(t)));
-		
-		return intersect;
+		return List.of(new GeoPoint(this, ray.getPoint(t)));
 	}
 	
 }

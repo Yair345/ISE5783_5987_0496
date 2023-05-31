@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,20 @@ import java.util.Objects;
 public abstract class Intersectable
 {
 	/**
+	 * Finds the geometric intersections of a ray with the elements in the scene.
+	 *
+	 * @param ray the ray to intersect with the elements
+	 * @param maxDistance the maximum distance for intersection
+	 * @return a list of GeoPoint objects representing the intersections, or an empty list if no intersections were found
+	 */
+	public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance)
+	{
+		return findGeoIntersectionsHelper(ray, maxDistance);
+	}
+	
+	/**
 	 * Returns a list of intersection points between the object and a given ray.
+	 *
 	 * @param ray The ray to intersect with the object.
 	 * @return A list of intersection points between the object and the ray.
 	 */
@@ -22,7 +36,7 @@ public abstract class Intersectable
 		var geoList = findGeoIntersections(ray);
 		return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
 	}
-
+	
 	/**
 	 * Finds the geometric intersections between a ray and the geometry.
 	 *
@@ -31,9 +45,9 @@ public abstract class Intersectable
 	 */
 	public List<GeoPoint> findGeoIntersections(Ray ray)
 	{
-		return findGeoIntersectionsHelper(ray);
+		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
 	}
-
+	
 	/**
 	 * Helper method for finding the geometric intersections between a ray and the geometry.
 	 * Subclasses should override this method to provide the specific implementation.
@@ -41,8 +55,8 @@ public abstract class Intersectable
 	 * @param ray The ray to intersect with the geometry.
 	 * @return A list of geometric intersection points between the ray and the geometry.
 	 */
-	protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
-
+	protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance);
+	
 	/**
 	 * The GeoPoint class represents a geometric intersection point between a ray and a geometry.
 	 */
@@ -50,34 +64,35 @@ public abstract class Intersectable
 	{
 		public Geometry geometry;
 		public Point point;
-
+		
 		/**
 		 * Constructs a GeoPoint object with the specified geometry and point.
 		 *
 		 * @param geometry The geometry of the intersection.
-		 * @param point The intersection point.
+		 * @param point    The intersection point.
 		 */
 		public GeoPoint(Geometry geometry, Point point)
 		{
 			this.geometry = geometry;
 			this.point = point;
 		}
-
+		
 		/**
 		 * Checks if this GeoPoint is equal to another object.
 		 *
 		 * @param o The object to compare.
 		 * @return true if the objects are equal, false otherwise.
 		 */
+		
 		@Override
 		public boolean equals(Object o)
 		{
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
+			if (this == o) {return true;}
+			if (o == null || getClass() != o.getClass()) {return false;}
 			GeoPoint geoPoint = (GeoPoint) o;
 			return Objects.equals(geometry, geoPoint.geometry) && Objects.equals(point, geoPoint.point);
 		}
-
+		
 		/**
 		 * Computes the hash code of this GeoPoint.
 		 *
@@ -88,7 +103,7 @@ public abstract class Intersectable
 		{
 			return Objects.hash(geometry, point);
 		}
-
+		
 		/**
 		 * Returns a string representation of this GeoPoint.
 		 *

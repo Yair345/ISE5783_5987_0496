@@ -56,18 +56,19 @@ public class Geometries extends Intersectable
 	}
 	
 	/**
-	 * Computes the intersections between the given ray and the geometries in the collection.
+	 * Helper method to find the geometric intersections of a ray with the elements in the scene.
 	 *
-	 * @param ray the ray to intersect with the geometries.
-	 * @return a list of intersection points between the ray and the geometries, or null if there are no intersections.
+	 * @param ray the ray to intersect with the elements
+	 * @param maxDistance the maximum distance for intersection
+	 * @return a list of GeoPoint objects representing the intersections, or null if no intersections were found
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
 	{
 		List<GeoPoint> result = null;
 		for (var element : elements)
 		{
-			List<GeoPoint> elemPoints = element.findGeoIntersectionsHelper(ray);
+			List<GeoPoint> elemPoints = element.findGeoIntersections(ray, maxDistance);
 			if (elemPoints != null)
 			{
 				if (result == null)

@@ -99,4 +99,16 @@ public class PointLight extends Light implements LightSource
             return null;
         }
     }
+    
+    /**
+     * Calculates the distance between the shape and a given point.
+     *
+     * @param point the point to calculate the distance from
+     * @return the distance between the shape and the point
+     */
+    @Override
+    public double getDistance(Point point)
+    {
+        return position.distance(position);
+    }
 }

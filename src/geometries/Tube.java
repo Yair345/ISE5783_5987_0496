@@ -70,16 +70,16 @@ public class Tube extends RadialGeometry
 		
 		return normal.normalize();
 	}
-
+	
 	/**
-	 * Helper method for finding the geometric intersections between a ray and the triangle.
-	 * Overrides the method from the superclass Geometry.
+	 * Helper method to find the geometric intersections of a ray with the shape.
 	 *
-	 * @param ray The ray to intersect with the triangle.
-	 * @return A list of geometric intersection points between the ray and the triangle.
+	 * @param ray the ray to intersect with the shape
+	 * @param maxDistance the maximum distance for intersection
+	 * @return null indicating no intersections
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray)
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
 	{
 		return null;
 	}

@@ -25,4 +25,12 @@ public interface LightSource
      * @return the direction of the light
      */
     public Vector getL(Point p);
+    
+    /**
+     * Calculates the distance between the shape and a given point.
+     *
+     * @param point the point to calculate the distance from
+     * @return the distance between the shape and the point
+     */
+    double getDistance(Point point);
 }
