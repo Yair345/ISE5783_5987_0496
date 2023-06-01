@@ -100,7 +100,7 @@ public class Plane extends Geometry
 	 * @return a list of GeoPoint objects representing the intersections, or null if no intersection was found
 	 */
 	@Override
-	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
+	protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance)
 	{
 		double temp, t;
 		Vector vec;
@@ -123,20 +123,17 @@ public class Plane extends Geometry
 		}
 		
 		temp = vec.dotProduct(normal);
-		t = temp / t;
+		t = alignZero(temp / t);
 		
-		if (t <= 0)
+		if (t > 0)
 		{ // direction is opposite
-			return null;
+			if (alignZero(t - maxDistance) < 0)
+			{
+				return List.of(new GeoPoint(this, ray.getPoint(t)));
+			}
 		}
 		
-		if (alignZero(t - maxDistance) > 0)
-		{
-			return null;
-		}
-		
-		return List.of(new GeoPoint(this, ray.getPoint(t)));
+		return null;
 	}
-	
 }
 

@@ -73,16 +73,16 @@ public class Sphere extends RadialGeometry
         {
             u = center.subtract(ray.getP0()); // if the ray start at the center we go to catch
 
-            tm = u.dotProduct(ray.getDir());
+            tm = alignZero(u.dotProduct(ray.getDir()));
 
-            double d = u.lengthSquared() - tm * tm; // we will use sqrt only once in this function
+            double d = alignZero(u.lengthSquared() - tm * tm); // we will use sqrt only once in this function
 
             if (d >= radius * radius) // there are no intersections
             {
                 return null;
             }
 
-            th = sqrt(radius * radius - d);
+            th = alignZero(sqrt(radius * radius - d));
         }
         catch(IllegalArgumentException e)
         {
@@ -100,8 +100,8 @@ public class Sphere extends RadialGeometry
         }
         
         if(t1 > 0 && t2 > 0
-                && alignZero(t1 - maxDistance) < 0
-                && alignZero(t2 - maxDistance) < 0)
+                && alignZero(t1 - maxDistance) <= 0
+                && alignZero(t2 - maxDistance) <= 0)
         {
             return List.of(
                     new GeoPoint(this, ray.getPoint(t1)),
@@ -109,12 +109,12 @@ public class Sphere extends RadialGeometry
         }
 
         // might be only 1 intersection
-        if (t1 > 0 && alignZero(t1 - maxDistance) < 0)
+        if (t1 > 0 && alignZero(t1 - maxDistance) <= 0)
         {
             return List.of(new GeoPoint(this, ray.getPoint(t1)));
         }
         
-        if (t2 > 0 && alignZero(t2 - maxDistance) < 0)
+        if (t2 > 0 && alignZero(t2 - maxDistance) <= 0)
         {
             return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }

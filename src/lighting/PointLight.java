@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
+
 /**
  * The PointLight class represents a point light source, which emits light uniformly in all
  * directions from a specific position.
@@ -109,6 +111,6 @@ public class PointLight extends Light implements LightSource
     @Override
     public double getDistance(Point point)
     {
-        return position.distance(position);
+        return alignZero(position.distance(point));
     }
 }
