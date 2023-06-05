@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Refactor getIntersactions and in the middle of shaded.">
+      <change afterPath="$PROJECT_DIR$/images/reflectionTwoSpheresMirrored.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/refractionShadow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/refractionTwoSpheres.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/shadowSphereTriangleInitial.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowSphereTriangleInitial.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/Plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lighting/PointLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/PointLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/primitives/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/primitives/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/renderer/ShadowTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ShadowTests.java" afterDir="false" />
     </list>
     <list id="f3088997-f221-44a7-acca-0f6c72b7cb53" name="Changes by yairl" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,11 +33,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -71,7 +71,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yairl/Downloads/ISE5782_XXXX_YYYY-eliezer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yairl/Downloads/ISE5782_XXXX_YYYY-eliezer/ISE5782_XXXX_YYYY-eliezer&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -102,7 +102,7 @@
       <recent name="primitives" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ShadowTests">
+  <component name="RunManager" selected="JUnit.All in ISE5783_5987_0496">
     <configuration name="All in ISE5783_5987_0496" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <option name="PACKAGE_NAME" value="" />
@@ -111,7 +111,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LightsTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LightsTests.sphereDirectional" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
         <pattern>
@@ -121,6 +121,22 @@
       </extension>
       <option name="PACKAGE_NAME" value="lighting" />
       <option name="MAIN_CLASS_NAME" value="lighting.LightsTests" />
+      <option name="METHOD_NAME" value="sphereDirectional" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReflectionRefractionTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE5783_5987_0496" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="unittests.renderer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="unittests.renderer" />
+      <option name="MAIN_CLASS_NAME" value="unittests.renderer.ReflectionRefractionTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -157,27 +173,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="renderer in ISE5783_5987_0496" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE5783_5987_0496" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="renderer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="renderer" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in ISE5783_5987_0496" />
+        <item itemvalue="JUnit.ReflectionRefractionTests" />
+        <item itemvalue="JUnit.LightsTests.sphereDirectional" />
         <item itemvalue="JUnit.ShadowTests" />
         <item itemvalue="JUnit.ShadowTests.sphereTriangleInitial" />
-        <item itemvalue="JUnit.All in ISE5783_5987_0496" />
-        <item itemvalue="JUnit.LightsTests" />
-        <item itemvalue="JUnit.renderer in ISE5783_5987_0496" />
       </list>
     </recent_temporary>
   </component>

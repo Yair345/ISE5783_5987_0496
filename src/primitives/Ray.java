@@ -6,6 +6,9 @@ import geometries.Intersectable.GeoPoint;
 import java.util.List;
 import java.util.Objects;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * Represents a ray in 3D space, defined by a starting point and a direction.
  *
@@ -13,6 +16,7 @@ import java.util.Objects;
  */
 public class Ray
 {
+	private static final double DELTA = 0.1;
 	
 	/**
 	 * The starting point of the ray.
@@ -33,8 +37,25 @@ public class Ray
 	public Ray(Point p0, Vector dir)
 	{
 		this.p0 = new Point(p0.xyz);
+		
 		Vector temp = new Vector(dir.xyz);
 		this.dir = temp.normalize();
+	}
+	
+	/**
+	 * Constructs a ray with a given head point, direction vector, and surface normal.
+	 * Adjusts the head point to avoid self-intersections by adding or subtracting a small delta value along the normal direction.
+	 *
+	 * @param head the starting point of the ray
+	 * @param dir the direction vector of the ray
+	 * @param n the surface normal
+	 */
+	public Ray(Point head, Vector dir, Vector n)
+	{
+		double nl = alignZero(n.dotProduct(dir));
+		this.p0 = isZero(nl) ? head : head.add(n.scale(nl < 0 ? -DELTA : DELTA));
+		
+		this.dir = dir.normalize();
 	}
 	
 	/**

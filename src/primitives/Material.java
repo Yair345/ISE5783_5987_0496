@@ -6,8 +6,29 @@ package primitives;
  */
 public class Material
 {
+    /**
+     * Diffuse reflection coefficient
+     */
     public Double3 kD = Double3.ZERO;
+    
+    /**
+     * Specular reflection coefficient
+     */
     public Double3 kS = Double3.ZERO;
+    
+    /**
+     * Transmission (refraction) coefficient
+     */
+    public Double3 kT = Double3.ZERO;
+    
+    /**
+     * Reflection coefficient
+     */
+    public Double3 kR = Double3.ZERO;
+    
+    /**
+     * Shininess factor for specular reflection
+     */
     public int nShininess = 0;
     
     /**
@@ -74,5 +95,56 @@ public class Material
 
         return this;
     }
-
+    
+    /**
+     * Sets the transmission coefficient (kT) of the material.
+     *
+     * @param kT The transmission coefficient as a Double3 object.
+     * @return The material instance with the updated transmission coefficient.
+     */
+    public Material setKt(Double3 kT)
+    {
+        this.kT = kT;
+        
+        return this;
+    }
+    
+    /**
+     * Sets the transmission coefficient (kT) of the material.
+     *
+     * @param kT The transmission coefficient as a double value.
+     * @return The material instance with the updated transmission coefficient.
+     */
+    public Material setKt(double kT)
+    {
+        this.kT = new Double3(kT);
+        
+        return this;
+    }
+    
+    /**
+     * Sets the reflection coefficient (kR) of the material.
+     *
+     * @param kR The reflection coefficient as a Double3 object.
+     * @return The material instance with the updated reflection coefficient.
+     */
+    public Material setKr(Double3 kR)
+    {
+        this.kR = kR;
+        
+        return this;
+    }
+    
+    /**
+     * Sets the reflection coefficient (kR) of the material.
+     *
+     * @param kR The reflection coefficient as a double value.
+     * @return The material instance with the updated reflection coefficient.
+     */
+    public Material setKr(double kR)
+    {
+        this.kR = new Double3(kR);
+        
+        return this;
+    }
 }
