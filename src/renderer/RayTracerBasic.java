@@ -124,11 +124,11 @@ public class RayTracerBasic extends RayTracerBase
 	{
 		Double3 kkx = k.product(kx);
 		if (kkx.lowerThan(MIN_CALC_COLOR_K))
-		{return Color.BLACK;}
+			return Color.BLACK;
 		
 		GeoPoint gp = findClosestIntersection(ray);
 		if (gp == null)
-		{return scene.background.scale(kx);}
+			return scene.background.scale(kx);
 		
 		return isZero(gp.geometry.getNormal(gp.point)
 							  .dotProduct(ray.getDir())) ?
@@ -203,7 +203,7 @@ public class RayTracerBasic extends RayTracerBase
 		double nv = alignZero(n.dotProduct(v));
 		
 		if (nv == 0)
-		{return color;}
+			return color;
 		
 		Material material = gp.geometry.getMaterial();
 		for (LightSource lightSource : scene.lights)
@@ -213,9 +213,13 @@ public class RayTracerBasic extends RayTracerBase
 			
 			if (nl * nv > 0)
 			{ // sign(nl) == sign(nv)
-				if (unshaded(gp, lightSource, l, n))
+//				if (unshaded(gp, lightSource, l, n))
+				Double3 ktr = transparency(gp, lightSource, l, n);
+				if (ktr.product(k)
+						.graterThan(MIN_CALC_COLOR_K))
 				{
-					Color iL = lightSource.getIntensity(gp.point);
+					Color iL = lightSource.getIntensity(gp.point)
+							.scale(ktr);
 					color = color.add(
 							iL.scale(calcDiffusive(material, nl)),
 							iL.scale(calcSpecular(material, n, l, nl, v)));
@@ -281,14 +285,47 @@ public class RayTracerBasic extends RayTracerBase
 		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, distance);
 		
 		if (intersections == null)
-		{return true;}
+			return true;
 		
 		for (GeoPoint intersection : intersections)
 		{
 			if (Double3.ZERO.equals(intersection.geometry.getMaterial().kT))
-			{return false;}
+				return false;
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Calculates the transparency factor for a point on a surface.
+	 *
+	 * @param gp    The intersection point on the surface
+	 * @param light The light source
+	 * @param l     The direction from the intersection point to the light source
+	 * @param n     The surface normal at the intersection point
+	 * @return The transparency factor as a Double3 vector
+	 */
+	private Double3 transparency(GeoPoint gp, LightSource light, Vector l, Vector n)
+	{
+		Vector lightDirection = l.scale(-1); // shadow ray
+		
+		Ray lightRay = new Ray(gp.point, lightDirection, n);
+		
+		double distance = light.getDistance(lightRay.getP0());
+		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, distance);
+		
+		if (intersections == null)
+			return Double3.ONE;
+		
+		Double3 ktr = Double3.ONE;
+		
+		for (GeoPoint intersection : intersections)
+		{
+			ktr = ktr.product(intersection.geometry.getMaterial().kT);
+			if (ktr.lowerThan(MIN_CALC_COLOR_K))
+				return Double3.ZERO;
+		}
+		
+		return ktr;
 	}
 }

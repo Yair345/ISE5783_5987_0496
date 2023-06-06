@@ -112,4 +112,14 @@ public class Double3 {
    public boolean lowerThan(Double3 other) {
       return d1 < other.d1 && d2 < other.d2 && d3 < other.d3;
    }
+   
+   /**
+    * Checks if all three components of the Double3 vector are greater than a specified value.
+    *
+    * @param k The value to compare against
+    * @return True if all components are greater than the specified value, false otherwise
+    */
+   public boolean graterThan(double k) {
+      return d1 > k && d2 > k && d3 > k;
+   }
 }

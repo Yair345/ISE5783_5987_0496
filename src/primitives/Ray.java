@@ -47,13 +47,17 @@ public class Ray
 	 * Adjusts the head point to avoid self-intersections by adding or subtracting a small delta value along the normal direction.
 	 *
 	 * @param head the starting point of the ray
-	 * @param dir the direction vector of the ray
-	 * @param n the surface normal
+	 * @param dir  the direction vector of the ray
+	 * @param n    the surface normal
 	 */
 	public Ray(Point head, Vector dir, Vector n)
 	{
 		double nl = alignZero(n.dotProduct(dir));
-		this.p0 = isZero(nl) ? head : head.add(n.scale(nl < 0 ? -DELTA : DELTA));
+		this.p0 = isZero(nl) ?
+				  head :
+				  head.add(n.scale(nl < 0 ?
+								   -DELTA :
+								   DELTA));
 		
 		this.dir = dir.normalize();
 	}
@@ -89,7 +93,7 @@ public class Ray
 		Vector temp = dir.scale(t);
 		return p0.add(temp);
 	}
-
+	
 	/**
 	 * Finds the closest point from a list of points.
 	 *
@@ -98,10 +102,14 @@ public class Ray
 	 */
 	public Point findClosestPoint(List<Point> points)
 	{
-		return points == null || points.isEmpty() ? null
-				: findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+		return points == null || points.isEmpty() ?
+			   null
+												  :
+			   findClosestGeoPoint(points.stream()
+										   .map(p -> new GeoPoint(null, p))
+										   .toList()).point;
 	}
-
+	
 	/**
 	 * Finds the closest GeoPoint in a given list of GeoPoints to a reference point.
 	 *
@@ -112,27 +120,27 @@ public class Ray
 	{
 		GeoPoint closestPoint;
 		double minDistance, temp;
-
+		
 		// null list
 		if (list.size() == 0)
 		{
 			return null;
 		}
-
+		
 		closestPoint = list.get(0);
 		minDistance = p0.distanceSquared(closestPoint.point);
-
-		for (Intersectable.GeoPoint p: list)
+		
+		for (Intersectable.GeoPoint p : list)
 		{
 			temp = p0.distanceSquared(p.point);
-
+			
 			if (temp < minDistance)
 			{
 				minDistance = temp;
 				closestPoint = p;
 			}
 		}
-
+		
 		return closestPoint;
 	}
 	
