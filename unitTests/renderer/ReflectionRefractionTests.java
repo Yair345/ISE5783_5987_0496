@@ -160,17 +160,26 @@ public class ReflectionRefractionTests
 		};
 		
 		Material matStar = new Material()
-				.setKd(0.5)
+				.setKd(0.2)
 				.setKs(0.5)
 				.setKt(0.4)
-				.setShininess(60);
-		
+				//.setKd(0.5)
+				.setShininess(90);
+				//.setShininess(60);
+
 		Material matGlass = new Material()
 				.setKd(0.5)
 				.setKs(0.5)
 				.setKr(0.6)
 				.setShininess(50);
-		
+
+		Material matSphere = new Material()
+				.setKd(0.5)
+				.setKs(0.5)
+				.setKr(0.6)
+				.setKt(0.8)
+				.setShininess(50);
+
 		scene.geometries.add(
 				new Triangle(v[0], v[1], v[2])
 						.setMaterial(matStar),
@@ -203,12 +212,16 @@ public class ReflectionRefractionTests
 						.setMaterial(matGlass),
 				new Plane(new Point(0, -70, 0),
 						  new Vector(0,1,0))
-						.setMaterial(matGlass)
+						.setMaterial(matGlass),
+
+				new Sphere(40,
+						new Point(-3, 0, -10))
+						.setMaterial(matSphere)
 		);
 		
 		scene.lights.add(
 				new SpotLight(
-						new Color(0, 255, 0),
+						new Color(255, 255, 255),
 						new Point(70, 70, 70),
 						new Vector(-40, 0, -100)
 				)

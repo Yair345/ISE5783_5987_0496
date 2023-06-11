@@ -40,8 +40,7 @@ public class Scene
 		geometries = builder.geometries;
 		lights = builder.lights;
 	}
-	
-			
+
 	/**
 	 * The SceneBuilder class is a builder for constructing Scene objects.
 	 */
