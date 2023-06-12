@@ -211,6 +211,7 @@ public class RayTracerBasic extends RayTracerBase
 			if (nl * nv > 0)
 			{ // sign(nl) == sign(nv)
 //				if (unshaded(gp, lightSource, l, n))
+//				Double3 ktr = transparency(gp, lightSource, l, n);
 				Double3 ktr = softShadow(gp, lightSource, l, n);
 				if (ktr.product(k)
 						.graterThan(MIN_CALC_COLOR_K))
@@ -334,10 +335,12 @@ public class RayTracerBasic extends RayTracerBase
 		{
 			horizontal = new Vector(1, 0, 0);
 		}
+		else
+		{
+			horizontal = new Vector(-1 * l.getY(), l.getX(), 0);
+		}
 
-		horizontal = new Vector(-1 * l.getY(), l.getX(), 0);
-
-		Vector vertical = horizontal.crossProduct(l);
+		Vector vertical = l.crossProduct(horizontal);
 
 		double distance = light.getDistance(gp.point);
 
@@ -355,21 +358,11 @@ public class RayTracerBasic extends RayTracerBase
 
 		for (Point p : beamSource)
 		{
-			ktr.add(transparency(new GeoPoint(gp.geometry, p), light, l, n));
+			ktr.add(transparency(gp, light, gp.point.subtract(p).normalize(), n));
 		}
 
-		ktr = ktr.scale(1 / beamSource.size());
+		ktr = ktr.scale(1.0 / beamSource.size());
 
 		return ktr.lowerThan(MIN_CALC_COLOR_K) ? Double3.ZERO : ktr;
 	}
 }
-
-
-
-
-
-
-
-
-
-
