@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * The DirectionalLight class represents a directional light source, which emits light in a specific direction
  * from an infinite distance away.
@@ -59,5 +61,11 @@ public class DirectionalLight extends Light implements LightSource
     public double getDistance(Point point)
     {
         return Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public List<Point> generateBeamPoints(Point p0, Vector x, Vector vertical, double radius, int numOfPoints)
+    {
+        return null;
     }
 }

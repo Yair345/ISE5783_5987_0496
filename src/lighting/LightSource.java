@@ -4,6 +4,8 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * The LightSource interface represents a light source in a scene that provides methods for calculating
  * the intensity and direction of light at a given point.
@@ -33,4 +35,6 @@ public interface LightSource
      * @return the distance between the shape and the point
      */
     double getDistance(Point point);
+
+    List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints);
 }

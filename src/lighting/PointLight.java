@@ -4,6 +4,10 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import static primitives.Util.alignZero;
 
 /**
@@ -112,5 +116,34 @@ public class PointLight extends Light implements LightSource
     public double getDistance(Point point)
     {
         return alignZero(position.distance(point));
+    }
+
+    @Override
+    public List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints)
+    {
+        List<Point> beamPoints = new LinkedList<>();
+        Random random = new Random();
+        double angleDelta = 360.0 / numOfPoints;
+
+        for (int i = 0; i < numOfPoints; i++)
+        {
+            // Calculate the angle in radians
+            double angle = Math.toRadians(angleDelta * i);
+            double cosAngle = Math.cos(angle);
+            double sinAngle = Math.sin(angle);
+            double newRadius = radius * random.nextDouble();
+            double radiusCos = newRadius * cosAngle;
+            double radiusSin = newRadius * sinAngle;
+
+            // Calculate the position of the point on the circle
+            double x = p0.getX() + radiusCos * horizontal.getX() + radiusSin * vertical.getX();
+            double y = p0.getY() + radiusCos * horizontal.getY() + radiusSin * vertical.getY();
+            double z = p0.getZ() + radiusCos * horizontal.getZ() + radiusSin * vertical.getZ();
+
+            // Create the point and add it to the list
+            beamPoints.add(new Point(x, y, z));
+        }
+
+        return beamPoints;
     }
 }

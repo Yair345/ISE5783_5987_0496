@@ -211,7 +211,7 @@ public class RayTracerBasic extends RayTracerBase
 			if (nl * nv > 0)
 			{ // sign(nl) == sign(nv)
 //				if (unshaded(gp, lightSource, l, n))
-				Double3 ktr = transparency(gp, lightSource, l, n);
+				Double3 ktr = softShadow(gp, lightSource, l, n);
 				if (ktr.product(k)
 						.graterThan(MIN_CALC_COLOR_K))
 				{
@@ -300,7 +300,7 @@ public class RayTracerBasic extends RayTracerBase
 	 * @param light The light source
 	 * @param l     The direction from the intersection point to the light source
 	 * @param n     The surface normal at the intersection point
-	 * @return The transparency factor as a Double3 vector
+	 * @return 		The transparency factor as a Double3 vector
 	 */
 	private Double3 transparency(GeoPoint gp, LightSource light, Vector l, Vector n)
 	{
@@ -325,4 +325,51 @@ public class RayTracerBasic extends RayTracerBase
 		
 		return ktr;
 	}
+
+	private Double3 softShadow(GeoPoint gp, LightSource light, Vector l, Vector n)
+	{
+		Vector horizontal;
+
+		if (alignZero(l.getX()) == 0 && alignZero(l.getY()) == 0)
+		{
+			horizontal = new Vector(1, 0, 0);
+		}
+
+		horizontal = new Vector(-1 * l.getY(), l.getX(), 0);
+
+		Vector vertical = horizontal.crossProduct(l);
+
+		double distance = light.getDistance(gp.point);
+
+		double radius = distance / 10;
+
+		int numOfPoints = (int)radius * 20;
+
+		List<Point> beamSource = light.generateBeamPoints(gp.point, horizontal, vertical, radius, numOfPoints);
+
+		// directional light
+		if (beamSource == null)
+			return transparency(gp, light, l, n);
+
+		Double3 ktr = Double3.ZERO;
+
+		for (Point p : beamSource)
+		{
+			ktr.add(transparency(new GeoPoint(gp.geometry, p), light, l, n));
+		}
+
+		ktr = ktr.scale(1 / beamSource.size());
+
+		return ktr.lowerThan(MIN_CALC_COLOR_K) ? Double3.ZERO : ktr;
+	}
 }
+
+
+
+
+
+
+
+
+
+
