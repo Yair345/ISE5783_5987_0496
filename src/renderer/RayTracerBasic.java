@@ -5,6 +5,7 @@ import lighting.LightSource;
 import primitives.*;
 import scene.Scene;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -203,26 +204,35 @@ public class RayTracerBasic extends RayTracerBase
 			return color;
 		
 		Material material = gp.geometry.getMaterial();
+		
 		for (LightSource lightSource : scene.lights)
 		{
 			Vector l = lightSource.getL(gp.point);
-			double nl = alignZero(n.dotProduct(l));
+			Color colorBeam = Color.BLACK;
 			
-			if (nl * nv > 0)
-			{ // sign(nl) == sign(nv)
+			var beam = createBeam(gp, lightSource, l, n);
+			
+			for (Vector vec: beam)
+			{
+				double nvec = alignZero(n.dotProduct(vec));
+				
+				if (nvec * nv > 0)
+				{ // sign(nl) == sign(nv)
 //				if (unshaded(gp, lightSource, l, n))
-//				Double3 ktr = transparency(gp, lightSource, l, n);
-				Double3 ktr = softShadow(gp, lightSource, l, n);
-				if (ktr.product(k)
-						.graterThan(MIN_CALC_COLOR_K))
-				{
-					Color iL = lightSource.getIntensity(gp.point)
-							.scale(ktr);
-					color = color.add(
-							iL.scale(calcDiffusive(material, nl)),
-							iL.scale(calcSpecular(material, n, l, nl, v)));
+					Double3 ktr = transparency(gp, lightSource, vec, n);
+					if (ktr.product(k)
+							.graterThan(MIN_CALC_COLOR_K))
+					{
+						Color iL = lightSource.getIntensity(gp.point)
+								.scale(ktr);
+						colorBeam = colorBeam.add(
+								iL.scale(calcDiffusive(material, nvec)),
+								iL.scale(calcSpecular(material, n, vec, nvec, v)));
+					}
 				}
 			}
+			
+			color = color.add(colorBeam.reduce(beam.size()));
 		}
 		
 		return color;
@@ -327,8 +337,14 @@ public class RayTracerBasic extends RayTracerBase
 		return ktr;
 	}
 
-	private Double3 softShadow(GeoPoint gp, LightSource light, Vector l, Vector n)
+	private List<Vector> createBeam(GeoPoint gp, LightSource light, Vector l, Vector n)
 	{
+		double distance = light.getDistance(gp.point);
+		
+		// directional light
+		if (distance == Double.POSITIVE_INFINITY)
+			return List.of(l);
+		
 		Vector horizontal;
 
 		if (alignZero(l.getX()) == 0 && alignZero(l.getY()) == 0)
@@ -337,32 +353,27 @@ public class RayTracerBasic extends RayTracerBase
 		}
 		else
 		{
-			horizontal = new Vector(-1 * l.getY(), l.getX(), 0);
+			horizontal = new Vector(-1 * l.getY(), l.getX(), 0).normalize();
 		}
 
-		Vector vertical = l.crossProduct(horizontal);
-
-		double distance = light.getDistance(gp.point);
+		Vector vertical = l.crossProduct(horizontal).normalize();
 
 		double radius = distance / 10;
 
 		int numOfPoints = (int)radius * 20;
+		
+		Point point = gp.point.add(l.scale(-distance));
 
-		List<Point> beamSource = light.generateBeamPoints(gp.point, horizontal, vertical, radius, numOfPoints);
-
-		// directional light
-		if (beamSource == null)
-			return transparency(gp, light, l, n);
-
-		Double3 ktr = Double3.ZERO;
+		List<Point> beamSource = light.generateBeamPoints(point, horizontal, vertical, radius, numOfPoints);
+		
+		LinkedList<Vector> beamVectors = new LinkedList<>();
+		beamVectors.add(l);
 
 		for (Point p : beamSource)
 		{
-			ktr.add(transparency(gp, light, gp.point.subtract(p).normalize(), n));
+			beamVectors.add(gp.point.subtract(p));
 		}
-
-		ktr = ktr.scale(1.0 / beamSource.size());
-
-		return ktr.lowerThan(MIN_CALC_COLOR_K) ? Double3.ZERO : ktr;
+		
+		return beamVectors;
 	}
 }

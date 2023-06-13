@@ -240,11 +240,11 @@ public class ReflectionRefractionTests
 //	public void hungarianQube()
 //	{
 //		Camera camera = new Camera(
-//				new Point(10000, 0, 0),
+//				new Point(300, 0, 0),
 //				new Vector(-1, 0, 0),
 //				new Vector(0, 0, 1))
 //				.setVPSize(200, 200)
-//				.setVPDistance(10);
+//				.setVPDistance(100);
 //
 //		scene.ambientLight = new AmbientLight(new Color(WHITE), 0.15);
 //

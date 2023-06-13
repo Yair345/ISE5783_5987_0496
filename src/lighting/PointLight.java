@@ -21,6 +21,8 @@ public class PointLight extends Light implements LightSource
     private double kL = 0;
     private double kQ = 0;
     
+    private static Random random = new Random();
+    
     /**
      * Constructs a PointLight object with the specified intensity and position.
      *
@@ -122,7 +124,6 @@ public class PointLight extends Light implements LightSource
     public List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints)
     {
         List<Point> beamPoints = new LinkedList<>();
-        Random random = new Random();
         double angleDelta = 360.0 / numOfPoints;
 
         for (int i = 0; i < numOfPoints; i++)
