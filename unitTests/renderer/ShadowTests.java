@@ -167,24 +167,24 @@ public class ShadowTests
 		camera.writeToImage();
 	}
 	
-	@Test
-	public void checkBeam()
-	{
-		LightSource lightSource = new SpotLight(new Color(400, 240, 0), new Point(0,0,0), new Vector(1, 1, -3)) //
-				.setKl(1E-5)
-				.setKq(1.5E-7);
-		
-		List<Point> beam = lightSource
-				.generateBeamPoints(new Point(0,0,0),
-									new Vector(1,0,0),
-									new Vector(0,1,0),
-									5.0,
-									100);
-		
-		for (Point p: beam)
-		{
-			System.out.println(p);
-		}
-	}
+//	@Test
+//	public void checkBeam()
+//	{
+//		LightSource lightSource = new SpotLight(new Color(400, 240, 0), new Point(0,0,0), new Vector(1, 1, -3)) //
+//				.setKl(1E-5)
+//				.setKq(1.5E-7);
+//
+//		List<Point> beam = lightSource
+//				.generateBeamPoints(new Point(0,0,0),
+//									new Vector(1,0,0),
+//									new Vector(0,1,0),
+//									5.0,
+//									100);
+//
+//		for (Point p: beam)
+//		{
+//			System.out.println(p);
+//		}
+//	}
 	
 }

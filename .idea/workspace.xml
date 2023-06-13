@@ -8,9 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/images/shadowSphereTriangleSpot1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowSphereTriangleSpot1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/starOfDavid.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/starOfDavid.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lighting/DirectionalLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/DirectionalLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lighting/LightSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/LightSource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lighting/PointLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/PointLight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/renderer/ShadowTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ShadowTests.java" afterDir="false" />
     </list>
     <list id="f3088997-f221-44a7-acca-0f6c72b7cb53" name="Changes by yairl" comment="" />
@@ -101,7 +103,7 @@
       <recent name="primitives" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ShadowTests.triangleSphereDirectional">
+  <component name="RunManager" selected="JUnit.ReflectionRefractionTests.starOfDavid">
     <configuration name="ReflectionRefractionTests.starOfDavid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
@@ -118,7 +120,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ShadowTests.checkBeam" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShadowTests.sphereTriangleInitial" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
         <pattern>
@@ -128,7 +130,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
       <option name="MAIN_CLASS_NAME" value="renderer.ShadowTests" />
-      <option name="METHOD_NAME" value="checkBeam" />
+      <option name="METHOD_NAME" value="sphereTriangleInitial" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -184,11 +186,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ShadowTests.triangleSphereDirectional" />
+        <item itemvalue="JUnit.ReflectionRefractionTests.starOfDavid" />
         <item itemvalue="JUnit.ShadowTests.sphereTriangleSpot1" />
         <item itemvalue="JUnit.ShadowTests.trianglesSphere" />
-        <item itemvalue="JUnit.ShadowTests.checkBeam" />
-        <item itemvalue="JUnit.ReflectionRefractionTests.starOfDavid" />
+        <item itemvalue="JUnit.ShadowTests.sphereTriangleInitial" />
+        <item itemvalue="JUnit.ShadowTests.triangleSphereDirectional" />
       </list>
     </recent_temporary>
   </component>
