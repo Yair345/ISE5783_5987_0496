@@ -153,6 +153,12 @@ public class ShadowTests
 		camera2.writeToImage();
 	}
 	
+	/**
+	 * Test case for rendering an image of a scene with a triangle and a sphere using a directional light source.
+	 * The triangle and sphere are added to the scene's geometry, and the directional light source is added to the scene's lights.
+	 * The camera is configured with an image writer and the image is rendered and saved.
+	 * This test verifies the rendering of the scene with the given objects and light source.
+	 */
 	@Test
 	public void triangleSphereDirectional()
 	{
@@ -167,6 +173,13 @@ public class ShadowTests
 		camera.writeToImage();
 	}
 	
+	/**
+	 * Test case for generating and printing a beam of points from a light source.
+	 * The test creates a SpotLight with a specified color, position, and direction.
+	 * The generateBeamPoints method is called on the light source to generate a beam of points.
+	 * The generated points are printed to the console for inspection.
+	 * This test verifies the generation of the beam points for the given light source parameters.
+	 */
 	@Test
 	public void checkBeam()
 	{

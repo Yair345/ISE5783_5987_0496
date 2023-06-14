@@ -62,16 +62,21 @@ public class DirectionalLight extends Light implements LightSource
     {
         return Double.POSITIVE_INFINITY;
     }
-
+    
+    /**
+     * Generates a list of points forming a beam pattern centered at the given point.
+     *
+     * @param p0 The center point of the beam
+     * @param horizontal The horizontal direction vector of the beam
+     * @param vertical The vertical direction vector of the beam
+     * @param radius The radius of the beam
+     * @param numOfPoints The number of points to generate in the beam
+     * @return A list of points forming the beam pattern
+     */
     @Override
-    public List<Point> generateBeamPoints(Point p0, Vector x, Vector vertical, double radius, int numOfPoints)
+    public List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints)
     {
         return null;
     }
 
-//    @Override
-//    public List<Vector> generateBeam(Point p, LightSource light)
-//    {
-//        return null;
-//    }
 }

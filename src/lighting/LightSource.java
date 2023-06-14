@@ -35,8 +35,16 @@ public interface LightSource
      * @return the distance between the shape and the point
      */
     double getDistance(Point point);
-
+    
+    /**
+     * Generates a list of points forming a beam pattern centered at the given point.
+     *
+     * @param p0 The center point of the beam
+     * @param horizontal The horizontal direction vector of the beam
+     * @param vertical The vertical direction vector of the beam
+     * @param radius The radius of the beam
+     * @param numOfPoints The number of points to generate in the beam
+     * @return A list of points forming the beam pattern
+     */
     List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints);
-
-    //public List<Vector> generateBeam(Point p, LightSource light);
 }

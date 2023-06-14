@@ -2,7 +2,6 @@ package renderer;
 
 import geometries.Intersectable.GeoPoint;
 import lighting.LightSource;
-import lighting.PointLight;
 import primitives.*;
 import scene.Scene;
 
@@ -32,6 +31,8 @@ public class RayTracerBasic extends RayTracerBase
 	 * The initial value for the reflection and transmission coefficients during color calculation.
 	 */
 	private static final Double3 INITIAL_K = Double3.ONE;
+	
+	private final boolean softShadow = true;
 	
 	/**
 	 * Constructs a RayTracerBasic object with the specified scene.
@@ -209,32 +210,53 @@ public class RayTracerBasic extends RayTracerBase
 		for (LightSource lightSource : scene.lights)
 		{
 			Vector l = lightSource.getL(gp.point);
-			Color colorBeam = Color.BLACK;
-
-			var beam = createBeam(gp, lightSource, l, n);
-			//List<Vector> beam = lightSource.generateBeamPoints(gp.point,);
 			
-			for (Vector vec: beam)
+			if (softShadow)
 			{
-				double nvec = alignZero(n.dotProduct(vec));
+				Color colorBeam = Color.BLACK;
 				
-				if (nvec * nv > 0)
-				{ // sign(nl) == sign(nv)
+				var beam = createBeam(gp, lightSource, l, n);
+				
+				for (Vector vec : beam)
+				{
+					double nvec = alignZero(n.dotProduct(vec));
+					
+					if (nvec * nv > 0)
+					{ // sign(nl) == sign(nv)
 //				if (unshaded(gp, lightSource, l, n))
-					Double3 ktr = transparency(gp, lightSource, vec, n);
+						Double3 ktr = transparency(gp, lightSource, vec, n);
+						if (ktr.product(k)
+								.graterThan(MIN_CALC_COLOR_K))
+						{
+							Color iL = lightSource.getIntensity(gp.point)
+									.scale(ktr);
+							colorBeam = colorBeam.add(
+									iL.scale(calcDiffusive(material, nvec)),
+									iL.scale(calcSpecular(material, n, vec, nvec, v)));
+						}
+					}
+				}
+				
+				color = color.add(colorBeam.reduce(beam.size()));
+			}
+			else
+			{
+				double nl = alignZero(n.dotProduct(l));
+				
+				if (nl * nv > 0)
+				{
+					Double3 ktr = transparency(gp, lightSource, l, n);
 					if (ktr.product(k)
 							.graterThan(MIN_CALC_COLOR_K))
 					{
 						Color iL = lightSource.getIntensity(gp.point)
 								.scale(ktr);
-						colorBeam = colorBeam.add(
-								iL.scale(calcDiffusive(material, nvec)),
-								iL.scale(calcSpecular(material, n, vec, nvec, v)));
+						color = color.add(
+								iL.scale(calcDiffusive(material, nl)),
+								iL.scale(calcSpecular(material, n, l, nl, v)));
 					}
 				}
 			}
-			
-			color = color.add(colorBeam.reduce(beam.size()));
 		}
 		
 		return color;
@@ -338,7 +360,16 @@ public class RayTracerBasic extends RayTracerBase
 		
 		return ktr;
 	}
-
+	
+	/**
+	 * Creates a beam of vectors representing rays of light emitted from a light source towards a given point.
+	 *
+	 * @param gp The geometric point on the surface of an object.
+	 * @param light The light source emitting the beam.
+	 * @param l The direction vector from the light source towards the surface point.
+	 * @param n The surface normal vector at the given point.
+	 * @return A list of vectors representing the beam of rays.
+	 */
 	private List<Vector> createBeam(GeoPoint gp, LightSource light, Vector l, Vector n)
 	{
 		double distance = light.getDistance(gp.point);
@@ -360,7 +391,7 @@ public class RayTracerBasic extends RayTracerBase
 
 		Vector vertical = l.crossProduct(horizontal).normalize();
 
-		double radius = distance / 10;
+		double radius = distance / 35;
 
 		int numOfPoints = (int)radius * 20;
 
@@ -373,7 +404,7 @@ public class RayTracerBasic extends RayTracerBase
 
 		for (Point p : beamSource)
 		{
-			beamVectors.add(gp.point.subtract(p));
+			beamVectors.add(gp.point.subtract(p).normalize());
 		}
 
 		return beamVectors;
