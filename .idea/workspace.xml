@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Found bug at soft shadow of the 8'th Stage.">
+    <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="return the bug at soft shadow of the 8'th Stage.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/images/shadowSphereTriangleSpot1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowSphereTriangleSpot1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/shadowTrianglesSphere.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/starOfDavid.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/starOfDavid.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lighting/DirectionalLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/DirectionalLight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lighting/LightSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/LightSource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lighting/PointLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/PointLight.java" afterDir="false" />
@@ -103,7 +101,7 @@
       <recent name="primitives" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ReflectionRefractionTests.starOfDavid">
+  <component name="RunManager" selected="JUnit.ShadowTests.sphereTriangleSpot1">
     <configuration name="ReflectionRefractionTests.starOfDavid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
@@ -115,6 +113,22 @@
       <option name="PACKAGE_NAME" value="unittests.renderer" />
       <option name="MAIN_CLASS_NAME" value="unittests.renderer.ReflectionRefractionTests" />
       <option name="METHOD_NAME" value="starOfDavid" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShadowTests.checkBeam" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE5783_5987_0496" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="renderer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ShadowTests" />
+      <option name="METHOD_NAME" value="checkBeam" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -152,22 +166,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ShadowTests.triangleSphereDirectional" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE5783_5987_0496" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="renderer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.ShadowTests" />
-      <option name="METHOD_NAME" value="triangleSphereDirectional" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ShadowTests.trianglesSphere" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
@@ -186,11 +184,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ReflectionRefractionTests.starOfDavid" />
         <item itemvalue="JUnit.ShadowTests.sphereTriangleSpot1" />
+        <item itemvalue="JUnit.ShadowTests.checkBeam" />
+        <item itemvalue="JUnit.ReflectionRefractionTests.starOfDavid" />
         <item itemvalue="JUnit.ShadowTests.trianglesSphere" />
         <item itemvalue="JUnit.ShadowTests.sphereTriangleInitial" />
-        <item itemvalue="JUnit.ShadowTests.triangleSphereDirectional" />
       </list>
     </recent_temporary>
   </component>
@@ -329,7 +327,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1686584959460</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL‎-00019" summary="Fix the bug at soft shadow of the 8'th Stage.">
+      <created>1686695244965</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL‎-00019" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1686695244965</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -363,7 +368,9 @@
     <MESSAGE value="Finished of the 7'th Stage. (update photo)" />
     <MESSAGE value="Finished of the 8'th Stage." />
     <MESSAGE value="Found bug at soft shadow of the 8'th Stage." />
-    <option name="LAST_COMMIT_MESSAGE" value="Found bug at soft shadow of the 8'th Stage." />
+    <MESSAGE value="Fix the bug at soft shadow of the 8'th Stage." />
+    <MESSAGE value="return the bug at soft shadow of the 8'th Stage." />
+    <option name="LAST_COMMIT_MESSAGE" value="return the bug at soft shadow of the 8'th Stage." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

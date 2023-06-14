@@ -2,6 +2,7 @@ package renderer;
 
 import geometries.Intersectable.GeoPoint;
 import lighting.LightSource;
+import lighting.PointLight;
 import primitives.*;
 import scene.Scene;
 
@@ -209,8 +210,9 @@ public class RayTracerBasic extends RayTracerBase
 		{
 			Vector l = lightSource.getL(gp.point);
 			Color colorBeam = Color.BLACK;
-			
-			List<Vector> beam = lightSource.generateBeam(gp.point, lightSource);
+
+			var beam = createBeam(gp, lightSource, l, n);
+			//List<Vector> beam = lightSource.generateBeamPoints(gp.point,);
 			
 			for (Vector vec: beam)
 			{
@@ -337,43 +339,43 @@ public class RayTracerBasic extends RayTracerBase
 		return ktr;
 	}
 
-//	private List<Vector> createBeam(GeoPoint gp, LightSource light, Vector l, Vector n)
-//	{
-//		double distance = light.getDistance(gp.point);
-//
-//		// directional light
-//		if (distance == Double.POSITIVE_INFINITY)
-//			return List.of(l);
-//
-//		Vector horizontal;
-//
-//		if (alignZero(l.getX()) == 0 && alignZero(l.getY()) == 0)
-//		{
-//			horizontal = new Vector(1, 0, 0);
-//		}
-//		else
-//		{
-//			horizontal = new Vector(-1 * l.getY(), l.getX(), 0).normalize();
-//		}
-//
-//		Vector vertical = l.crossProduct(horizontal).normalize();
-//
-//		double radius = distance / 10;
-//
-//		int numOfPoints = (int)radius * 20;
-//
-//		Point point = gp.point.add(l.scale(-distance));
-//
-//		List<Point> beamSource = light.generateBeamPoints(point, horizontal, vertical, radius, numOfPoints);
-//
-//		LinkedList<Vector> beamVectors = new LinkedList<>();
-//		beamVectors.add(l);
-//
-//		for (Point p : beamSource)
-//		{
-//			beamVectors.add(gp.point.subtract(p));
-//		}
-//
-//		return beamVectors;
-//	}
+	private List<Vector> createBeam(GeoPoint gp, LightSource light, Vector l, Vector n)
+	{
+		double distance = light.getDistance(gp.point);
+
+		// directional light
+		if (distance == Double.POSITIVE_INFINITY)
+			return List.of(l);
+
+		Vector horizontal;
+
+		if (alignZero(l.getX()) == 0 && alignZero(l.getY()) == 0)
+		{
+			horizontal = new Vector(1, 0, 0);
+		}
+		else
+		{
+			horizontal = new Vector(-1 * l.getY(), l.getX(), 0).normalize();
+		}
+
+		Vector vertical = l.crossProduct(horizontal).normalize();
+
+		double radius = distance / 10;
+
+		int numOfPoints = (int)radius * 20;
+
+		Point point = gp.point.add(l.scale(-distance));
+
+		List<Point> beamSource = light.generateBeamPoints(point, horizontal, vertical, radius, numOfPoints);
+
+		LinkedList<Vector> beamVectors = new LinkedList<>();
+		beamVectors.add(l);
+
+		for (Point p : beamSource)
+		{
+			beamVectors.add(gp.point.subtract(p));
+		}
+
+		return beamVectors;
+	}
 }

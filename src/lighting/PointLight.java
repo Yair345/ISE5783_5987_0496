@@ -34,7 +34,7 @@ public class PointLight extends Light implements LightSource
         super(intensity);
         this.position = position;
     }
-    
+
     /**
      * Sets the constant attenuation factor for the point light.
      *
@@ -120,78 +120,78 @@ public class PointLight extends Light implements LightSource
         return alignZero(position.distance(point));
     }
 
-//    @Override
-//    public List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints)
-//    {
-//        List<Point> beamPoints = new LinkedList<>();
-//        double angleDelta = 360.0 / numOfPoints;
-//
-//        for (int i = 0; i < numOfPoints; i++)
-//        {
-//            // Calculate the angle in radians
-//            double angle = Math.toRadians(angleDelta * i);
-//            double cosAngle = Math.cos(angle);
-//            double sinAngle = Math.sin(angle);
-//            double newRadius = radius * random.nextDouble();
-//            double radiusCos = newRadius * cosAngle;
-//            double radiusSin = newRadius * sinAngle;
-//
-//            // Calculate the position of the point on the circle
-//            double x = p0.getX() + radiusCos * horizontal.getX() + radiusSin * vertical.getX();
-//            double y = p0.getY() + radiusCos * horizontal.getY() + radiusSin * vertical.getY();
-//            double z = p0.getZ() + radiusCos * horizontal.getZ() + radiusSin * vertical.getZ();
-//
-//            // Create the point and add it to the list
-//            beamPoints.add(new Point(x, y, z));
-//        }
-//
-//        return beamPoints;
-//    }
-
     @Override
-    public List<Vector> generateBeam(Point p, LightSource light)
+    public List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints)
     {
-        List<Vector> vectors = new LinkedList();
+        List<Point> beamPoints = new LinkedList<>();
+        double angleDelta = 360.0 / numOfPoints;
 
-        double radius = light.getDistance(p) / 25;
-
-        //grid of vectors around the light
-        for (double i = -radius; i < radius; i += radius / 10)
+        for (int i = 0; i < numOfPoints; i++)
         {
-            for (double j = -radius; j < radius; j += radius / 10)
-            {
-                if (i != 0 && j != 0)
-                {
-                    //create a point on the grid
-                    Point point = position.add(new Vector(i, 0.1d, j));
-                    if (point.equals(position))
-                    {
-                        //if the point is the same as the light position,
-                        // add the vector from the point to the light
-                        vectors.add(p.subtract(point).normalize());
-                    }
-                    else
-                    {
-                        try
-                        {
-                            if (point.subtract(position).dotProduct(point.subtract(position)) <= radius * radius)
-                            {
-                                //if the point is in the radius of the light, add the vector from the point to the light
-                                vectors.add(p.subtract(point).normalize());
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            //if the point is not in the radius of the light, add the vector from the point to the light
-                            vectors.add(p.subtract(point).normalize());
-                        }
+            // Calculate the angle in radians
+            double angle = Math.toRadians(angleDelta * i);
+            double cosAngle = Math.cos(angle);
+            double sinAngle = Math.sin(angle);
+            double newRadius = radius * random.nextDouble();
+            double radiusCos = newRadius * cosAngle;
+            double radiusSin = newRadius * sinAngle;
 
-                    }
-                }
+            // Calculate the position of the point on the circle
+            double x = p0.getX() + radiusCos * horizontal.getX() + radiusSin * vertical.getX();
+            double y = p0.getY() + radiusCos * horizontal.getY() + radiusSin * vertical.getY();
+            double z = p0.getZ() + radiusCos * horizontal.getZ() + radiusSin * vertical.getZ();
 
-            }
+            // Create the point and add it to the list
+            beamPoints.add(new Point(x, y, z));
         }
-        vectors.add(getL(p));
-        return vectors;
+
+        return beamPoints;
     }
+
+//    @Override
+//    public List<Vector> generateBeam(Point p, LightSource light)
+//    {
+//        List<Vector> vectors = new LinkedList();
+//
+//        double radius = light.getDistance(p) / 25;
+//
+//        //grid of vectors around the light
+//        for (double i = -radius; i < radius; i += radius / 10)
+//        {
+//            for (double j = -radius; j < radius; j += radius / 10)
+//            {
+//                if (i != 0 && j != 0)
+//                {
+//                    //create a point on the grid
+//                    Point point = position.add(new Vector(i, 0.1d, j));
+//                    if (point.equals(position))
+//                    {
+//                        //if the point is the same as the light position,
+//                        // add the vector from the point to the light
+//                        vectors.add(p.subtract(point).normalize());
+//                    }
+//                    else
+//                    {
+//                        try
+//                        {
+//                            if (point.subtract(position).dotProduct(point.subtract(position)) <= radius * radius)
+//                            {
+//                                //if the point is in the radius of the light, add the vector from the point to the light
+//                                vectors.add(p.subtract(point).normalize());
+//                            }
+//                        }
+//                        catch (Exception e)
+//                        {
+//                            //if the point is not in the radius of the light, add the vector from the point to the light
+//                            vectors.add(p.subtract(point).normalize());
+//                        }
+//
+//                    }
+//                }
+//
+//            }
+//        }
+//        vectors.add(getL(p));
+//        return vectors;
+//    }
 }

@@ -36,7 +36,7 @@ public interface LightSource
      */
     double getDistance(Point point);
 
-    //List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints);
+    List<Point> generateBeamPoints(Point p0, Vector horizontal, Vector vertical, double radius, int numOfPoints);
 
-    public List<Vector> generateBeam(Point p, LightSource light);
+    //public List<Vector> generateBeam(Point p, LightSource light);
 }

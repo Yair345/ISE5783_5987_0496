@@ -63,15 +63,15 @@ public class DirectionalLight extends Light implements LightSource
         return Double.POSITIVE_INFINITY;
     }
 
-//    @Override
-//    public List<Point> generateBeamPoints(Point p0, Vector x, Vector vertical, double radius, int numOfPoints)
-//    {
-//        return null;
-//    }
-
     @Override
-    public List<Vector> generateBeam(Point p, LightSource light)
+    public List<Point> generateBeamPoints(Point p0, Vector x, Vector vertical, double radius, int numOfPoints)
     {
         return null;
     }
+
+//    @Override
+//    public List<Vector> generateBeam(Point p, LightSource light)
+//    {
+//        return null;
+//    }
 }
