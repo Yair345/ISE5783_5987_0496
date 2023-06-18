@@ -61,6 +61,15 @@ public class Camera
 	 * The rayTracerBase field represents the ray tracer base used by the camera.
 	 */
 	private RayTracerBase rayTracerBase;
+
+	/**
+	 * Number of threads
+	 */
+	private int threadsCount = 1;
+	/**
+	 *
+	 */
+	private double printInterval = 1;
 	
 	/**
 	 * Constructs a new camera with the given position, target vector and up vector.
@@ -188,7 +197,32 @@ public class Camera
 
 		return this;
 	}
-	
+
+	/**
+	 * Sets the print interval for debug information or log messages.
+	 *
+	 * @param k The new value for the print interval.
+	 * @return The modified Camera object.
+	 */
+	public Camera setDebugPrint(double k)
+	{
+		this.printInterval = k;
+		return this;
+	}
+
+	/**
+	 * Sets the number of threads to be used by the camera.
+	 *
+	 * @param n The new value for the number of threads.
+	 * @return The modified Camera object.
+	 */
+	public Camera setMultithreading(int n)
+	{
+		this.threadsCount = n;
+		return this;
+	}
+
+
 	/**
 	 * Constructs a ray that passes through the pixel at (j,i) in the viewport.
 	 *
@@ -249,15 +283,39 @@ public class Camera
 		
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
-		
-		for (int row = 0; row < Ny; row++)
+
+		// Checking if we try to use threads.
+		if (threadsCount == 1)
 		{
-			for (int col = 0; col < Nx; col++)
+			//rendering image without using of threads (by-default)
+			for (int row = 0; row < Ny; row++)
 			{
-				Color color = castRay(Nx, Ny, row, col);
-				imageWriter.writePixel(row, col, color);
+				for (int col = 0; col < Nx; col++)
+				{
+					Color color = castRay(Nx, Ny, row, col);
+					imageWriter.writePixel(row, col, color);
+				}
 			}
 		}
+		else
+		{
+			//rendering image with using of threads
+			Pixel.initialize(Ny, Nx, printInterval);
+			while (threadsCount-- > 0)
+			{
+				new Thread(() ->
+				{
+					for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+					{
+						Color pixelColor = castRay(Nx, Ny, pixel.col, pixel.row);
+						imageWriter.writePixel(pixel.col, pixel.row, pixelColor);
+					}
+
+				}).start();
+			}
+			Pixel.waitToFinish();
+		}
+
 		return this;
 	}
 	
