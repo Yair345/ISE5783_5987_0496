@@ -3,6 +3,7 @@ package renderer;
 import primitives.*;
 
 import java.util.MissingResourceException;
+import java.util.stream.*;
 
 import static primitives.Util.isZero;
 
@@ -70,6 +71,12 @@ public class Camera
 	 *
 	 */
 	private double printInterval = 1;
+
+	/**
+	 * The pixel manager responsible for managing pixels or pixel-related operations.
+	 * This private variable is used within the class scope.
+	 */
+	private PixelManager pixelManager;
 	
 	/**
 	 * Constructs a new camera with the given position, target vector and up vector.
@@ -263,7 +270,6 @@ public class Camera
 	}
 
 	/**
-
 	 * Renders the image using the configured image writer and ray tracer base.
 	 * Throws an exception if the image writer or ray tracer base is not initialized.
 	 *
@@ -300,20 +306,11 @@ public class Camera
 		else
 		{
 			//rendering image with using of threads
-			Pixel.initialize(Ny, Nx, printInterval);
-			while (threadsCount-- > 0)
-			{
-				new Thread(() ->
-				{
-					for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
-					{
-						Color pixelColor = castRay(Nx, Ny, pixel.col, pixel.row);
-						imageWriter.writePixel(pixel.col, pixel.row, pixelColor);
-					}
+			pixelManager = new PixelManager(Ny, Nx, printInterval);
 
-				}).start();
-			}
-			Pixel.waitToFinish();
+			IntStream.range(0, Ny).parallel()
+					.forEach(i -> IntStream.range(0, Nx).parallel()
+					.forEach(j -> castRayParallel(Nx, Ny, j, i)));
 		}
 
 		return this;
@@ -334,6 +331,24 @@ public class Camera
 		Color color = rayTracerBase.traceRay(ray);
 		return color;
 	}
+
+	/**
+	 * Casts a ray into the scene at the specified row and column in the image and returns the resulting
+	 * color of the intersection point.
+	 * Do the same as the other function but here this used in the threads.
+	 *
+	 * @param nX the number of pixels in the x-axis of the image
+	 * @param nY the number of pixels in the y-axis of the image
+	 * @param row the row of the pixel in the image
+	 * @param col the column of the pixel in the image
+	 * @return the color of the intersection point of the casted ray in the scene
+	 */
+	private void castRayParallel(int nX, int nY, int col, int row)
+	{
+		imageWriter.writePixel(col, row, rayTracerBase.traceRay(constructRay(nX, nY, col, row)));
+		pixelManager.pixelDone();
+	}
+
 
 	/**
 	 * Prints a grid on the image with a specified interval and color.
