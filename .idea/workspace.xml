@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f317d15-2f45-4116-83d4-d10cf1e017c8" name="Changes" comment="Finished Stage 8 (Mini Project 1).">
-      <change afterPath="$PROJECT_DIR$/images/MiniProject1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unitTests/renderer/MiniProject1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/Pixel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/MiniProject1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/MiniProject1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/renderer/MiniProject1.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/special/MiniProject1.java" afterDir="false" />
     </list>
     <list id="f3088997-f221-44a7-acca-0f6c72b7cb53" name="Changes by yairl" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,12 +120,12 @@
       <module name="ISE5783_5987_0496" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="renderer.*" />
+          <option name="PATTERN" value="special.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.MiniProject1" />
+      <option name="PACKAGE_NAME" value="special" />
+      <option name="MAIN_CLASS_NAME" value="special.MiniProject1" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
