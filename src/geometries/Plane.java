@@ -93,6 +93,22 @@ public class Plane extends Geometry
 	}
 	
 	/**
+	 * Creates the bounding box for the intersectable object.
+	 * This method must be implemented by the subclasses to define the specific bounding box.
+	 */
+	@Override
+	protected void createBox()
+	{
+		box.minX = Double.NEGATIVE_INFINITY;
+		box.minY = Double.NEGATIVE_INFINITY;
+		box.minZ = Double.NEGATIVE_INFINITY;
+		
+		box.maxX = Double.POSITIVE_INFINITY;
+		box.maxY = Double.POSITIVE_INFINITY;
+		box.maxZ = Double.POSITIVE_INFINITY;
+	}
+	
+	/**
 	 * Helper method to find the geometric intersections of a ray with the plane.
 	 *
 	 * @param ray the ray to intersect with the plane

@@ -56,6 +56,21 @@ public class Sphere extends RadialGeometry
         return temp.normalize();
     }
     
+    @Override
+    public void createBox()
+    {
+        double x = center.getX();
+        double y = center.getY();
+        double z = center.getZ();
+        
+        box.minX = x - radius;
+        box.maxX = x + radius;
+        box.minY = y - radius;
+        box.maxY = y + radius;
+        box.minZ = z - radius;
+        box.maxZ = z + radius;
+    }
+    
     /**
      * Helper method to find the geometric intersections of a ray with the sphere.
      *

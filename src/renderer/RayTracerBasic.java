@@ -32,7 +32,24 @@ public class RayTracerBasic extends RayTracerBase
 	 */
 	private static final Double3 INITIAL_K = Double3.ONE;
 	
-	private final boolean softShadow = true;
+	private boolean softShadow = false;
+	
+	private boolean BVH = true;
+	
+	public RayTracerBasic setSoftShadow(boolean b)
+	{
+		softShadow = b;
+		return this;
+	}
+	
+	public RayTracerBasic setBvh(boolean b) {
+		this.BVH = b;
+		
+		if (BVH)
+			scene.geometries.buildBvhTree();
+		
+		return this;
+	}
 	
 	/**
 	 * Constructs a RayTracerBasic object with the specified scene.
@@ -176,7 +193,13 @@ public class RayTracerBasic extends RayTracerBase
 	 */
 	private GeoPoint findClosestIntersection(Ray ray)
 	{
-		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+		List<GeoPoint> intersections;
+		
+		if (BVH)
+			intersections = scene.geometries.findGeoIntersectionsBVH(ray);
+		else
+			intersections = scene.geometries.findGeoIntersections(ray);
+		
 		if (intersections == null)
 		{
 			return null;
@@ -184,7 +207,6 @@ public class RayTracerBasic extends RayTracerBase
 		
 		return ray.findClosestGeoPoint(intersections);
 	}
-	
 	
 	/**
 	 * Calculates the local effects (diffuse and specular) at a given intersection point.

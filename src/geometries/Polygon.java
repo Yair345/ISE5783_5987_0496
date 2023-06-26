@@ -90,6 +90,24 @@ public class Polygon extends Geometry
    public Vector getNormal(Point point) { return plane.getNormal(); }
    
    /**
+    * Creates the bounding box for the intersectable object.
+    */
+   @Override
+   protected void createBox()
+   {
+      for (Point ver : vertices)
+      {
+         box.minX = box.minX > ver.getX() ? ver.getX() : box.minX;
+         box.minY = box.minY > ver.getY() ? ver.getY() : box.minY;
+         box.minZ = box.minZ > ver.getZ() ? ver.getZ() : box.minZ;
+         
+         box.maxX = box.maxX < ver.getX() ? ver.getX() : box.maxX;
+         box.maxY = box.maxY < ver.getY() ? ver.getY() : box.maxY;
+         box.maxZ = box.maxZ < ver.getZ() ? ver.getZ() : box.maxZ;
+      }
+   }
+   
+   /**
     * Helper method to find the geometric intersections of a ray with the polygon.
     *
     * @param ray the ray to intersect with the polygon

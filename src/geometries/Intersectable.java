@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Box;
 import primitives.Point;
 import primitives.Ray;
 
@@ -13,6 +14,33 @@ import java.util.Objects;
  */
 public abstract class Intersectable
 {
+	/**
+	 * The bounding box of the intersectable object
+	 */
+	public Box box = new Box();
+	
+	/**
+	 * Creates the bounding box for the intersectable object.
+	 * This method must be implemented by the subclasses to define the specific bounding box.
+	 */
+	protected abstract void createBox();
+	
+	/**
+	 * Finds the geometric intersections between the intersectable object and a ray in a bounding volume hierarchy (BVH).
+	 *
+	 * @param ray the ray to intersect with
+	 * @return a list of GeoPoint objects representing the intersections, or null if no intersections occur
+	 */
+	public List<GeoPoint> findGeoIntersectionsBVH(Ray ray)
+	{
+		return box.checkIntersectionWithBox(ray) == null ? null : findGeoIntersections(ray);
+	}
+	
+//	public List<GeoPoint> findGeoIntersectionsBVH(Ray ray , double maxDistance)
+//	{
+//		return box.checkIntersectionWithBox(ray) == null ? null : findGeoIntersections(ray , maxDistance);
+//	}
+	
 	/**
 	 * Finds the geometric intersections of a ray with the elements in the scene.
 	 *
