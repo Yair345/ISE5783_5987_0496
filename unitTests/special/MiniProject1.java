@@ -19,7 +19,7 @@ public class MiniProject1
 	private Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setVPSize(200, 200)
 			.setVPDistance(1000) //
-			.setRayTracer(new RayTracerBasic(scene).setSoftShadow(true));//.setSample(100));
+			.setRayTracer(new RayTracerBasic(scene).setSoftShadow(true).setBvh(true));
 	
 	/**
 	 * Produce a picture of two triangles lighted by a spot light with a Sphere
@@ -114,7 +114,73 @@ public class MiniProject1
 									  .setEmission(new Color(102,0,51)) //
 									  .setMaterial(new Material().setKd(0.5)
 														   .setKs(0.5)
-														   .setShininess(30))
+														   .setShininess(30)),
+
+
+							  // right triangle left side
+							  new Triangle(new Point(40, 20, -115),
+									  new Point(40, -20, -115),
+									  new Point(85, -40, 40)) //
+									  .setEmission(new Color(51,153, 255))
+									  .setMaterial(new Material().setKs(new Double3(0.8))
+											  .setShininess(60)), //
+
+							  // right triangle back
+							  new Triangle(new Point(40, 20, -115),
+									  new Point(70, 20, -115),
+									  new Point(85, -40, 40)) //
+									  .setEmission(new Color(0,153, 153))
+									  .setMaterial(new Material().setKs(new Double3(0.8))
+											  .setShininess(60)), //
+
+							  // right triangle right side
+							  new Triangle(new Point(70, 20, -115),
+									  new Point(70, -20, -115),
+									  new Point(85, -40, 40)) //
+									  .setEmission(new Color(255,255, 255))
+									  .setMaterial(new Material().setKs(new Double3(0.8))
+											  .setShininess(60)), //
+
+							  // right triangle front
+							  new Triangle(new Point(70, -20, -115),
+									  new Point(40, -20, -115),
+									  new Point(85, -40, 40)) //
+									  .setEmission(new Color(255, 255, 255))
+									  .setMaterial(new Material().setKs(new Double3(0.8))
+											  .setShininess(60)), //
+
+
+						 	  // left triangle left side
+						 	  new Triangle(new Point(-40, 20, -115),
+						 	  		new Point(-40, -20, -115),
+						 	  		new Point(-85, -40, 40)) //
+						 	  		.setEmission(new Color(51,153, 255))
+						 	  		.setMaterial(new Material().setKs(new Double3(0.8))
+						 	  				.setShininess(60)), //
+
+						 	  // left triangle back
+						 	  new Triangle(new Point(-40, 20, -115),
+						 	  		new Point(-70, 20, -115),
+						 	  		new Point(-85, -40, 40)) //
+						 	  		.setEmission(new Color(0,153, 153))
+						 	  		.setMaterial(new Material().setKs(new Double3(0.8))
+						 	  				.setShininess(60)), //
+
+						 	  // left triangle right side
+						 	  new Triangle(new Point(-70, 20, -115),
+						 	  		new Point(-70, -20, -115),
+						 	  		new Point(-85, -40, 40)) //
+						 	  		.setEmission(new Color(255, 255, 255))
+						 	  		.setMaterial(new Material().setKs(new Double3(0.8))
+						 	  				.setShininess(60)), //
+
+						 	  // left triangle front
+						 	  new Triangle(new Point(-70, -20, -115),
+						 	  		new Point(-40, -20, -115),
+						 	  		new Point(-85, -40, 40)) //
+						 	  		.setEmission(new Color(255, 255, 255))
+						 	  		.setMaterial(new Material().setKs(new Double3(0.8))
+						 	  				.setShininess(60)) //
                             );
         
         // shade for center sphere and triangle
